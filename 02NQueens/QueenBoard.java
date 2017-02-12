@@ -15,7 +15,7 @@ public class QueenBoard {
      *final configuration of the board after adding 
      *all n queens. Uses solveH
      */
-    public boolean solve()
+    public void solve()
     {
 	return solveH(0);
     }
@@ -37,5 +37,8 @@ public class QueenBoard {
      */
     public String toString(){
     	return "";
+    }
+
+    public void countSolutions() {
     }
 }
