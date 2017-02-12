@@ -24,11 +24,17 @@ public class QueenBoard {
 	return false;
     }
 
+    private boolean isPlaceable(int xcor, int ycor) {
+    }
+
     /**
      *@return the number of solutions found, or -1 if the board was never solved.
      *The board should be reset after this is run.    
      */
     public int getSolutionCount(){
+	if (solutionCount > 0) {
+	    return solutionCount;
+	}
     	return -1;
     }
     /**toString
@@ -41,4 +47,6 @@ public class QueenBoard {
 
     public void countSolutions() {
     }
+
+    public
 }
