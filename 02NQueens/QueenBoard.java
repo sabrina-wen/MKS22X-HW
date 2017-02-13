@@ -1,3 +1,4 @@
+
 public class QueenBoard {
     private int[][]board;
     private int solutionCount;
@@ -15,16 +16,23 @@ public class QueenBoard {
      *final configuration of the board after adding 
      *all n queens. Uses solveH
      */
-    public void solve()
-    {
+    public boolean solve() {
 	return solveH(0);
     }
 
     private boolean solveH(int col){
+        
 	return false;
     }
 
-    private boolean isPlaceable(int xcor, int ycor) {
+    private boolean addQueen(int row, int col) {
+	if (board[row][col] != 0) {
+	    return false;
+	}
+	else {
+	    for (int i = -
+	    return true;
+	}
     }
 
     /**
@@ -42,11 +50,21 @@ public class QueenBoard {
      *all others are displayed as underscores '_'
      */
     public String toString(){
-    	return "";
+        String solution = "";
+	for (int i = 0; i < board.length; i++) {
+	    for (int j = 0; j < board[0].length; j++) {
+		solution += board[i][j] + "_";
+	    }
+	    solution += "_";
+	}
+	return solution;
     }
 
-    public void countSolutions() {
-    }
+    // public void countSolutions() {
+    // }
 
-    public
+    public static void main (String[] args) {
+	QueenBoard b = new QueenBoard(2);
+	System.out.println(b.toString());
+    }
 }
