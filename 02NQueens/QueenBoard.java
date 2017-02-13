@@ -25,14 +25,17 @@ public class QueenBoard {
 	return false;
     }
 
-    private boolean addQueen(int row, int col) {
-	if (board[row][col] != 0) {
-	    return false;
-	}
-	else {
-	    for (int i = -
+    private int addQueen(int row, int col) {
+	if (isPlaceable) {
+	    for (int r = 0; r < board.length; r++) {
+		checkIfQueenIsAlreadyInRow - compare xs;
+	    }
 	    return true;
 	}
+    }
+
+    private boolean isPlaceable(int row, int col) {
+        return (board[row][col] == 0);
     }
 
     /**
