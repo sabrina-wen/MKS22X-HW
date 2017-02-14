@@ -27,7 +27,7 @@ public class QueenBoard {
 		if (col == board.length - 1) {
 		    return true;
 		}
-	        if (solveH(col + i)) {
+	        if (solveH(col + 1)) {
 		    return true;
 		}
 		else {
@@ -43,41 +43,35 @@ public class QueenBoard {
     // if a cell isn't occupied but could be occupied, cell == 0
     private boolean addQueen(int row, int col) {
 	if (isPlaceable(row, col)) {
-	    board[row][col] -= 1;
-	    // adding 1 to all other cells in rows
-	    for (int i = col + 1; i < board[0].length; i++) {
-		board[row][i] += 1;
+	    for (int r = row; r < board.length; r++) {
+		for (int c = col; c < board[0].length; c++) {
+		    if (row - r == 0 ||
+			col - c == 0 ||
+			Math.abs(row - r) == Math.abs(col - c)) {
+			    board[r][c] += 1;
+		    }
+		}
 	    }
-	    for (int j = row - 1; j >= 0; j--) {
-		board[j][col] += 1;	   
-	    }
-	    for (int k = col + 1; k < board[0].length; k++) {
-	      	for (int l = row - 1; l >= 0; l--) {
-		    board[k][l] += 1;
-                }
-	    }	    
-	    return true;
+             board[row][col] = -1;
+            return true;
 	} 
         return false;
     }
 
     private boolean removeQueen(int row, int col) {
-	if (!isPlaceable(row, col)) {
-	    board[row][col] += 1;
-	    // subtracting 1 to all other cells in rows
-	    for (int i = col + 1; i < board[0].length; i++) {
-		board[row][i] -= 1;
+	if (board[row][col] == -1) {
+	    for (int r = 0; r < board.length; r++) {
+		for (int c = 0; c < board[0].length; c++) {
+		    if (row - r == 0 ||
+			col - c == 0 ||
+			Math.abs(row - r) == Math.abs(col - c)) {
+			    board[r][c] -= 1;
+		    }
+		}
 	    }
-	    for (int j = row - 1; j >= 0; j--) {
-		board[j][col] -= 1;	   
-	    }
-	    for (int k = col + 1; k < board[0].length; k++) {
-	      	for (int l = row - 1; l >= 0; l--) {
-		    board[k][l] -= 1;
-                }
-	    }	    
+	    board[row][col] = 0;
 	    return true;
-	} 
+	}
         return false;
     }
 
@@ -115,8 +109,11 @@ public class QueenBoard {
 
     public static void main (String[] args) {
 	QueenBoard b = new QueenBoard(4);
-	// b.addQueen(0,0);
-	b.solve();
+	b.addQueen(0,0);
+	b.removeQueen(0,0);
+	// b.solve();
 	System.out.println(b.toString());
+	// b.addQueen(1,1);
+	// System.out.println(b.toString());
     }
 }
