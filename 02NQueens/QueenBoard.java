@@ -19,13 +19,15 @@ public class QueenBoard {
     public boolean solve() {
 	return solveH(0);
     }
+    
     // check to make sure not past column
     private boolean solveH(int col){
 	System.out.println(this);
 	int i = 0;
+	int count = 0;
         for (i = 0; i < board.length; i++) {
 	    if (addQueen(i, col)) {
-	        if (solveH(col + 1)) {
+	        if (col > board[0].length - 2 || solveH(col + 1)) {
 		    // remove return for countsolutions
 		    return true;
 		}
@@ -88,29 +90,41 @@ public class QueenBoard {
 	    return false;
 	}
 	board[row][col] = 0;
-	// adding 1 to all other cells in rows
-	for (int i = col + 1; i < board[0].length; i++) {
-	    board[row][i] -= 1;
-	}
-	// checking cells above
-	for (int j = row - 1; j >= 0; j--) {
-	    board[j][col] -= 1;	   
-	}
-	// checking cells diagonal above right
-	for (int k = col + 1; k < board[0].length; k++) {
-	    for (int l = row - 1; l >= 0; l--) {
-		board[k][l] -= 1;
+	int offset = 1;
+	while (col + offset < board[0].length) {
+	    board[row][col + offset] -= 1;
+	    if (row + offset < board.length) {
+		board[row + offset][col + offset] -= 1;
 	    }
+	    if (row - offset >= 0) {
+		board[row - offset][col + offset] -= 1;
+	    }
+	    offset++;
 	}
+	return true;
+	/** board[row][col] = 0;
+	 // adding 1 to all other cells in rows
+	 for (int i = col + 1; i < board[0].length; i++) {
+	 board[row][i] -= 1;
+	 }
+	 // checking cells above
+	 for (int j = row - 1; j >= 0; j--) {
+	 board[j][col] -= 1;	   
+	 }
+	 // checking cells diagonal above right
+	 for (int k = col + 1; k < board[0].length; k++) {
+	 for (int l = row - 1; l >= 0; l--) {
+	 board[k][l] -= 1;
+	 }
+	 }
 
-	// checking cells diagonal bottom right
-	for (int k = col + 1; k < board[0].length; k++) {
-	    for (int l = row + 1; l < board.length; l++) {
-		board[k][l] -= 1;
-	    }
-	}
-    return true;
-}
+	 // checking cells diagonal bottom right
+	 for (int k = col + 1; k < board[0].length; k++) {
+	 for (int l = row + 1; l < board.length; l++) {
+	 board[k][l] -= 1;
+	 }
+	 } **/
+    }
 
     private boolean isPlaceable(int row, int col) {
         return (board[row][col] == 0);
@@ -145,11 +159,12 @@ public class QueenBoard {
     // }
 
     public static void main (String[] args) {
-	QueenBoard b = new QueenBoard(6);
+	QueenBoard b = new QueenBoard(4);
 	// b.addQueen(0,0);
+	// b.addQueen(2,3);
 	// b.removeQueen(0,0);
-	// b.solve();
-      	b.addQueen(1,1);
+	b.solve();
+      	// b.addQueen(1,1);
 	System.out.println(b.toString());
 	// System.out.println(b.toString());
     }
