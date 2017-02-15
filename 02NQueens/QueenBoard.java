@@ -1,7 +1,7 @@
 
 public class QueenBoard {
     private int[][]board;
-    public static int solutionCount;
+    private int solutionCount;
     
     public QueenBoard(int size){
 	board = new int[size][size];
@@ -122,35 +122,43 @@ public class QueenBoard {
 	return solution;
     }
 
-     private void countSolutionsH(int col) {
+    // need to fix to void after done testing
+     private int countSolutionsH(int col) {
+	 System.out.println(this);
 	int i = 0;
         for (i = 0; i < board.length; i++) {
 	    if (addQueen(i, col)) {
 	        if (col > board[0].length - 2 || solveH(col + 1)) {
-		    solutionCount += 1;;
+		    solutionCount++;
+		    return solutionCount;
 		}
 		else {
 		    removeQueen(i, col);
 		}
 	    }
 	}
+	solutionCount += 0;
+	return solutionCount;
      }
 
     private void countSolutions() {
+	int size = board.length;
+	board = new int[size][size];
 	countSolutionsH(0);
     }
 
     
 
     public static void main (String[] args) {
-	QueenBoard b = new QueenBoard(4);
+	QueenBoard b = new QueenBoard(8);
 	// b.addQueen(0,0);
 	// b.addQueen(2,3);
 	// b.removeQueen(0,0);
-	b.solve();
+	b.countSolutionsH(0);
+	// System.out.println(b.getSolutionCount());
+	// b.solve();
       	// b.addQueen(1,1);
-	System.out.println(b.toString());
-	System.out.println(solutionCount);
+	// System.out.println(b.toString());
 	// System.out.println(b.toString());
     }
 }
