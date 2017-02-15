@@ -1,7 +1,7 @@
 
 public class QueenBoard {
     private int[][]board;
-    private int solutionCount;
+    public static int solutionCount;
     
     public QueenBoard(int size){
 	board = new int[size][size];
@@ -22,7 +22,7 @@ public class QueenBoard {
     
     // check to make sure not past column
     private boolean solveH(int col){
-	System.out.println(this);
+	// System.out.println(this);
 	int i = 0;
 	int count = 0;
         for (i = 0; i < board.length; i++) {
@@ -55,30 +55,7 @@ public class QueenBoard {
 		    board[row - offset][col + offset] += 1;
 		}
 		offset++;
-		}
- 	    /** // adding 1 to all other cells in rows
- 	    for (int i = col + 1; i < board[0].length; i++) {
- 		board[row][i] += 1;
- 	    }
-	    
-	    // checking cells above
- 	    for (int j = row - 1; j >= 0; j--) {
- 		board[j][col] += 1;	   
-		} 
-	    
-	    // checking cells diagonal above right
-	    for (int k = col + 1; k < board[0].length; k++) {
-	        for (int l = row - 1; l >= 0; l--) {
-		    board[k][l] += 1;
-		}
 	    }
-
-	    // checking cells diagonal bottom right
-	    for (int k = col + 1; k < board[0].length; k++) {
-	        for (int l = row + 1; l < board.length; l++) {
-		    board[k][l] += 1;
-		}
-	    } **/
 	    return true;
 	}	    		  	  	 
 	return false;
@@ -102,28 +79,6 @@ public class QueenBoard {
 	    offset++;
 	}
 	return true;
-	/** board[row][col] = 0;
-	 // adding 1 to all other cells in rows
-	 for (int i = col + 1; i < board[0].length; i++) {
-	 board[row][i] -= 1;
-	 }
-	 // checking cells above
-	 for (int j = row - 1; j >= 0; j--) {
-	 board[j][col] -= 1;	   
-	 }
-	 // checking cells diagonal above right
-	 for (int k = col + 1; k < board[0].length; k++) {
-	 for (int l = row - 1; l >= 0; l--) {
-	 board[k][l] -= 1;
-	 }
-	 }
-
-	 // checking cells diagonal bottom right
-	 for (int k = col + 1; k < board[0].length; k++) {
-	 for (int l = row + 1; l < board.length; l++) {
-	 board[k][l] -= 1;
-	 }
-	 } **/
     }
 
     private boolean isPlaceable(int row, int col) {
@@ -135,10 +90,17 @@ public class QueenBoard {
      *The board should be reset after this is run.    
      */
     public int getSolutionCount(){
-	if (solutionCount > 0) {
+	if (solutionCount == 0) {
+	    if (board.length == 2 || board.length == 3) {
+		return 0;
+	    }
+	    else {
+		return -1;
+	    }
+	}
+	else {
 	    return solutionCount;
 	}
-    	return -1;
     }
     /**toString
      *and all nunbers that represent queens are replaced with 'Q' 
@@ -148,15 +110,37 @@ public class QueenBoard {
         String solution = "";
 	for (int i = 0; i < board.length; i++) {
 	    for (int j = 0; j < board[0].length; j++) {
-		solution += board[i][j] + "  ";
+		if (board[i][j] == -1) {
+		    solution += "Q ";
+		}
+		else {
+		    solution += "_ ";
+		}
 	    }
 	    solution += "\n";
 	}
 	return solution;
     }
 
-    // public void countSolutions() {
-    // }
+     private void countSolutionsH(int col) {
+	int i = 0;
+        for (i = 0; i < board.length; i++) {
+	    if (addQueen(i, col)) {
+	        if (col > board[0].length - 2 || solveH(col + 1)) {
+		    solutionCount += 1;;
+		}
+		else {
+		    removeQueen(i, col);
+		}
+	    }
+	}
+     }
+
+    private void countSolutions() {
+	countSolutionsH(0);
+    }
+
+    
 
     public static void main (String[] args) {
 	QueenBoard b = new QueenBoard(4);
@@ -166,6 +150,7 @@ public class QueenBoard {
 	b.solve();
       	// b.addQueen(1,1);
 	System.out.println(b.toString());
+	System.out.println(solutionCount);
 	// System.out.println(b.toString());
     }
 }
