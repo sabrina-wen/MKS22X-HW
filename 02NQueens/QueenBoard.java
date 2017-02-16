@@ -24,7 +24,6 @@ public class QueenBoard {
     private boolean solveH(int col){
 	// System.out.println(this);
 	int i = 0;
-	int count = 0;
         for (i = 0; i < board.length; i++) {
 	    if (addQueen(i, col)) {
 	        if (col > board[0].length - 2 || solveH(col + 1)) {
@@ -90,18 +89,10 @@ public class QueenBoard {
      *The board should be reset after this is run.    
      */
     public int getSolutionCount(){
-	if (solutionCount == 0) {
-	    if (board.length == 2 || board.length == 3) {
-		return 0;
-	    }
-	    else {
-		return -1;
-	    }
-	}
-	else {
-	    return solutionCount;
-	}
+	countSolutions();
+	return solutionCount;
     }
+    
     /**toString
      *and all nunbers that represent queens are replaced with 'Q' 
      *all others are displayed as underscores '_'
@@ -123,25 +114,26 @@ public class QueenBoard {
     }
 
     // need to fix to void after done testing
-     private int countSolutionsH(int col) {
-	 System.out.println(this);
-	int i = 0;
-        for (i = 0; i < board.length; i++) {
-	    if (addQueen(i, col)) {
-	        if (col > board[0].length - 2 || solveH(col + 1)) {
-		    solutionCount++;
-		    return solutionCount;
-		}
-		else {
-		    removeQueen(i, col);
-		}
-	    }
-	}
-	solutionCount += 0;
-	return solutionCount;
+    // have base case separate, need to stop at end
+     private void countSolutionsH(int col) {
+	 if (col > board[0].length - 1) {
+	     // System.out.println(this);
+	     solutionCount += 1;
+	     // System.out.println("s.o.pln output: " + solutionCount);
+	     return;
+	 }
+	 int i = 0;
+	 for (i = 0; i < board.length; i++) {
+	     if (addQueen(i, col)) {
+		 countSolutionsH(col + 1);
+		 removeQueen(i, col);
+	     }
+	 }
      }
 
+    // change back to void after done testing
     private void countSolutions() {
+       	// System.out.println(this);
 	int size = board.length;
 	board = new int[size][size];
 	countSolutionsH(0);
@@ -154,11 +146,9 @@ public class QueenBoard {
 	// b.addQueen(0,0);
 	// b.addQueen(2,3);
 	// b.removeQueen(0,0);
-	b.countSolutionsH(0);
-	// System.out.println(b.getSolutionCount());
-	// b.solve();
+	b.solve();
       	// b.addQueen(1,1);
-	// System.out.println(b.toString());
-	// System.out.println(b.toString());
+	System.out.println(b.toString());
+	System.out.println(b.getSolutionCount());
     }
 }
