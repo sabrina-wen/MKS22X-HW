@@ -19,15 +19,15 @@ public class QueenBoard {
     public boolean solve() {
 	return solveH(0);
     }
-
+    
+    // check to make sure not past column
     private boolean solveH(int col){
+	// System.out.println(this);
 	int i = 0;
         for (i = 0; i < board.length; i++) {
 	    if (addQueen(i, col)) {
-		if (col == board.length - 1) {
-		    return true;
-		}
-	        if (solveH(col + i)) {
+	        if (col > board[0].length - 2 || solveH(col + 1)) {
+		    // remove return for countsolutions
 		    return true;
 		}
 		else {
@@ -43,42 +43,41 @@ public class QueenBoard {
     // if a cell isn't occupied but could be occupied, cell == 0
     private boolean addQueen(int row, int col) {
 	if (isPlaceable(row, col)) {
-	    board[row][col] -= 1;
-	    // adding 1 to all other cells in rows
-	    for (int i = col + 1; i < board[0].length; i++) {
-		board[row][i] += 1;
+	    board[row][col] = -1;
+	    int offset = 1;
+	    while (col + offset < board[0].length) {
+		board[row][col + offset] += 1;
+		if (row + offset < board.length) {
+		    board[row + offset][col + offset] += 1;
+		}
+		if ( row - offset >= 0) {
+		    board[row - offset][col + offset] += 1;
+		}
+		offset++;
 	    }
-	    for (int j = row - 1; j >= 0; j--) {
-		board[j][col] += 1;	   
-	    }
-	    for (int k = col + 1; k < board[0].length; k++) {
-	      	for (int l = row - 1; l >= 0; l--) {
-		    board[k][l] += 1;
-                }
-	    }	    
 	    return true;
-	} 
-        return false;
+	}	    		  	  	 
+	return false;
     }
+    
 
     private boolean removeQueen(int row, int col) {
-	if (!isPlaceable(row, col)) {
-	    board[row][col] += 1;
-	    // subtracting 1 to all other cells in rows
-	    for (int i = col + 1; i < board[0].length; i++) {
-		board[row][i] -= 1;
+	if (board[row][col] != -1) {
+	    return false;
+	}
+	board[row][col] = 0;
+	int offset = 1;
+	while (col + offset < board[0].length) {
+	    board[row][col + offset] -= 1;
+	    if (row + offset < board.length) {
+		board[row + offset][col + offset] -= 1;
 	    }
-	    for (int j = row - 1; j >= 0; j--) {
-		board[j][col] -= 1;	   
+	    if (row - offset >= 0) {
+		board[row - offset][col + offset] -= 1;
 	    }
-	    for (int k = col + 1; k < board[0].length; k++) {
-	      	for (int l = row - 1; l >= 0; l--) {
-		    board[k][l] -= 1;
-                }
-	    }	    
-	    return true;
-	} 
-        return false;
+	    offset++;
+	}
+	return true;
     }
 
     private boolean isPlaceable(int row, int col) {
@@ -90,11 +89,10 @@ public class QueenBoard {
      *The board should be reset after this is run.    
      */
     public int getSolutionCount(){
-	if (solutionCount > 0) {
-	    return solutionCount;
-	}
-    	return -1;
+	countSolutions();
+	return solutionCount;
     }
+    
     /**toString
      *and all nunbers that represent queens are replaced with 'Q' 
      *all others are displayed as underscores '_'
@@ -103,20 +101,54 @@ public class QueenBoard {
         String solution = "";
 	for (int i = 0; i < board.length; i++) {
 	    for (int j = 0; j < board[0].length; j++) {
-		solution += board[i][j] + "  ";
+		if (board[i][j] == -1) {
+		    solution += "Q ";
+		}
+		else {
+		    solution += "_ ";
+		}
 	    }
 	    solution += "\n";
 	}
 	return solution;
     }
 
-    // public void countSolutions() {
-    // }
+    // need to fix to void after done testing
+    // have base case separate, need to stop at end
+     private void countSolutionsH(int col) {
+	 if (col > board[0].length - 1) {
+	     // System.out.println(this);
+	     solutionCount += 1;
+	     // System.out.println("s.o.pln output: " + solutionCount);
+	     return;
+	 }
+	 int i = 0;
+	 for (i = 0; i < board.length; i++) {
+	     if (addQueen(i, col)) {
+		 countSolutionsH(col + 1);
+		 removeQueen(i, col);
+	     }
+	 }
+     }
+
+    // change back to void after done testing
+    private void countSolutions() {
+       	// System.out.println(this);
+	int size = board.length;
+	board = new int[size][size];
+	countSolutionsH(0);
+    }
+
+    
 
     public static void main (String[] args) {
-	QueenBoard b = new QueenBoard(4);
+	QueenBoard b = new QueenBoard(8);
 	// b.addQueen(0,0);
+	// b.addQueen(2,3);
+	// b.removeQueen(0,0);
 	b.solve();
+      	// b.addQueen(1,1);
 	System.out.println(b.toString());
+	System.out.println(b.getSolutionCount());
     }
 }
