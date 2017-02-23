@@ -32,6 +32,7 @@ public class KnightBoard {
      **/
 
     private boolean solveH (int row, int col, int level) {
+	System.out.println(this);
 	board[row][col] = level;
 	if (board.length * board[0].length == level - 1) {
 	    return true;
@@ -45,11 +46,10 @@ public class KnightBoard {
 		    int rowOffset = rowOptions[i];
 		    int colOffset = colOptions[j];
 		    if ((row + rowOffset < board.length && row + rowOffset > -1 )
-			&& (col + colOffset < board[0].length && row + colOffset > -1)
+			&& (col + colOffset < board[0].length && col + colOffset > -1)
 			&& (board[row + rowOffset][col + colOffset] == 0)) {
 			row += rowOffset;
 			col += colOffset;
-			level++;
 			board[row][col] = level;
 			solveH(row, col, level + 1);
 		    }
