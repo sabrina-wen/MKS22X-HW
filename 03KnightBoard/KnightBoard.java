@@ -12,6 +12,9 @@ public class KnightBoard {
 		if (board[r][c] < 10) {
 		    solution += "_" + board[r][c];
 		}
+		else {
+		    solution += board[r][c];
+		}
 		solution += " ";
 	    }
 	    solution += "\n";
@@ -29,7 +32,7 @@ public class KnightBoard {
 	 
 	 if not then backtrack by subtract 1 from level, set current cell = to 0, and then try next solution in the array
 	 if all solutions from the arrays have been exhausted, then you're done and board can't be solved
-     **/
+    **/
 
     private boolean solveH (int row, int col, int level) {
 	System.out.println(this);
@@ -38,25 +41,24 @@ public class KnightBoard {
 	    return true;
 	}
 	else {
+	    board[row][col] = level;
 	    int[] colOptions = {-1, 1, 2, 2, 1, -1, -2, -2};
 	    int[] rowOptions = {-2, -2, -1, 1, 2, 2, 1, -1};
 	    // board[row][col] = level;
-	    for (int i = 0; i < rowOptions.length; i++) {
-		for (int j = 0; j < colOptions.length; j++) {
-		    int rowOffset = rowOptions[i];
-		    int colOffset = colOptions[j];
-		    if ((row + rowOffset < board.length && row + rowOffset > -1 )
-			&& (col + colOffset < board[0].length && col + colOffset > -1)
-			&& (board[row + rowOffset][col + colOffset] == 0)) {
-			row += rowOffset;
-			col += colOffset;
-			board[row][col] = level;
-			solveH(row, col, level + 1);
-		    }
+	    for (int i = 0, j = 0; i < rowOptions.length && j < colOptions.length; i++, j++) {
+		int rowOffset = rowOptions[i];
+		int colOffset = colOptions[j];
+		if ((row + rowOffset < board.length && row + rowOffset > -1 )
+		    && (col + colOffset < board[0].length && col + colOffset > -1)
+		    && (board[row + rowOffset][col + colOffset] == 0)) {
+		    row += rowOffset;
+		    col += colOffset;
+		    solveH(row, col, level + 1);
 		}
 	    }
-	    
 	}
+	    
+	
 	return false;
     }
 
