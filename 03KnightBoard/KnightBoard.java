@@ -36,35 +36,32 @@ public class KnightBoard {
 
     private boolean solveH (int row, int col, int level) {
 	System.out.println(this);
-	board[row][col] = level;
-	if (board.length * board[0].length == level - 1) {
+	// board[row][col] = level;
+	if (board.length * board[0].length == level) {
 	    return true;
 	}
 	else {
-	    board[row][col] = level;
+            board[row][col] = level;
 	    int[] colOptions = {-1, 1, 2, 2, 1, -1, -2, -2};
 	    int[] rowOptions = {-2, -2, -1, 1, 2, 2, 1, -1};
-	    // board[row][col] = level;
 	    for (int i = 0, j = 0; i < rowOptions.length && j < colOptions.length; i++, j++) {
 		int rowOffset = rowOptions[i];
 		int colOffset = colOptions[j];
 		if ((row + rowOffset < board.length && row + rowOffset > -1 )
 		    && (col + colOffset < board[0].length && col + colOffset > -1)
 		    && (board[row + rowOffset][col + colOffset] == 0)) {
-		    row += rowOffset;
-		    col += colOffset;
-		    solveH(row, col, level + 1);
+		    solveH(row + rowOffset, col + colOffset, level + 1);
 		}
 	    }
+	    board[row][col] = 0;
+	    solveH(row, col, level + 1);	     
 	}
-	    
-	
-	return false;
+	return false;	
     }
 
-    public static void main (String[] args) {
-	KnightBoard b = new KnightBoard(7, 7);
-	b.solve();
-	System.out.println(b.toString());
+	public static void main (String[] args) {
+	    KnightBoard b = new KnightBoard(7, 7);
+	    b.solve();
+	    System.out.println(b.toString());
+	}
     }
-}
