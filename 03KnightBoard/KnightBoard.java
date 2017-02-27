@@ -35,6 +35,7 @@ public class KnightBoard {
     **/
 
     private boolean solveH (int row, int col, int level) {
+	// System.out.println("\033c");
 	// System.out.println(this);
 	// board[row][col] = level;
 	if (level > board.length * board[0].length) {
@@ -63,7 +64,7 @@ public class KnightBoard {
 	public static void main (String[] args) {
 	    // works for the following:
 	    // 6x7, 7x8, 6x8, 6x6, 5x5, 4x7
-	    KnightBoard b = new KnightBoard(8,8);
+	    KnightBoard b = new KnightBoard(6,6);
 	    b.solve();
 	    System.out.println(b.toString());
 	}
