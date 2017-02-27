@@ -63,9 +63,9 @@ public class KnightBoard {
 
 	public static void main (String[] args) {
 	    // works for the following:
-	    // 6x7, 7x8, 6x8, 6x6, 5x5, 4x7
-	    KnightBoard b = new KnightBoard(6,6);
+	    // 6x7, 7x8, 6x8, 6x6, 5x5, 4x7, 6x7
+	    KnightBoard b = new KnightBoard(7,6);
 	    b.solve();
-	    System.out.println(b.toString());
+	    // System.out.println(b.toString());
 	}
     }
