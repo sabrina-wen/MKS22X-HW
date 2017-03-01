@@ -16,9 +16,28 @@ public class Maze{
       2. The maze has a border of '#' around the edges. So you don't have to check for out of bounds!
       3. When the file is not found OR there is no E or S then: print an error and exit the program.
     */
+
     public Maze(String filename){
-        //COMPLETE CONSTRUCTOR
+	try {
+	    Scanner sc = new Scanner(new File(filename));
+	    while (sc.hasNextLine()) {
+		String data = sc.nextLine();
+	    }
+	}
+	catch (FileNotFoundException e) {
+	    System.out.println("File not found");
+	    System.exit(1);
+	}
+	animate = false;
     }
+
+    private void wait(int millis){ 
+         try {
+             Thread.sleep(millis);
+         }
+         catch (InterruptedException e) {
+         }
+     }
 
     public void setAnimate(boolean b){
         animate = b;
@@ -61,6 +80,10 @@ public class Maze{
 
         //COMPLETE SOLVE
         return false; //so it compiles
+    }
+
+    public static void main (String[] args) {
+	Maze m = new Maze(data1.dat);
     }
 
 }
