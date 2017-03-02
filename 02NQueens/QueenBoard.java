@@ -2,6 +2,7 @@
 public class QueenBoard {
     private int[][]board;
     private int solutionCount;
+    private boolean ifCountSolutions;
     
     public QueenBoard(int size){
 	board = new int[size][size];
@@ -89,7 +90,10 @@ public class QueenBoard {
      *The board should be reset after this is run.    
      */
     public int getSolutionCount(){
-	countSolutions();
+	// countSolutions();
+	if (!ifCountSolutions) {
+	    return -1;
+	}
 	return solutionCount;
     }
     
@@ -134,6 +138,7 @@ public class QueenBoard {
     // change back to void after done testing
     private void countSolutions() {
        	// System.out.println(this);
+	ifCountSolutions = true;
 	int size = board.length;
 	board = new int[size][size];
 	countSolutionsH(0);
@@ -142,13 +147,40 @@ public class QueenBoard {
     
 
     public static void main (String[] args) {
-	QueenBoard b = new QueenBoard(8);
+	// QueenBoard a = new QueenBoard(8);
+	// b.countSolutions();
+        // System.out.println(a.getSolutionCount());
 	// b.addQueen(0,0);
 	// b.addQueen(2,3);
 	// b.removeQueen(0,0);
-	b.solve();
+	// b.solve();
       	// b.addQueen(1,1);
-	System.out.println(b.toString());
-	System.out.println(b.getSolutionCount());
-    }
+	// System.out.println(b.toString());
+	// System.out.println(b.getSolutionCount());
+        QueenBoard b;
+	int[]tests =   {2,4, 5,6, 7, 8,  9, 10,  11};
+	int[]answers = {0,2,10,4,40,92,352,724,2680};
+	int score = 0;
+	for(int i = 0; i < tests.length; i++){
+	    int size = tests[i];
+	    int ans  = answers[i];
+	    b = new QueenBoard(size);
+	    b.countSolutions();
+	    if(b.getSolutionCount()==ans){
+		score++;
+	    }
+	    else{
+		System.out.println("Failed board size: "+size );
+	    }
+	}
+	b = new QueenBoard(5);
+	if(b.getSolutionCount() == -1){
+	    score++;
+	}
+	else{
+	    System.out.println("Failed when solution not yet run");
+	}
+	System.out.println("Score: "+score+" / "+(tests.length+1)); 
+    } 
+	
 }
