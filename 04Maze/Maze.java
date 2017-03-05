@@ -17,19 +17,36 @@ public class Maze{
       3. When the file is not found OR there is no E or S then: print an error and exit the program.
     */
 
-    public Maze(String filename){
+    public Maze (String filename) {
 	try {
-	    Scanner sc = new Scanner(new File(filename));
+	    File text = new File(filename);
+	    Scanner sc = new Scanner(text);
+	    int lineNumber = 1;
+	    int numS = 0;
+	    int numE = 0;
 	    while (sc.hasNextLine()) {
 		String data = sc.nextLine();
+		for (int i = 0; i < data.length(); i++) {
+		    if (data.charAt(i) == 'S') {
+			numS++;
+		    }
+		    if (data.charAt(i) == 'E') {
+			numE++;
+		    }
+		}
+		if (numS != 1 || numE != 1) {
+		    System.out.println("File does not contain an S and/or an E OR has too many S/E characters.");
+		    System.exit(1);
+		}
+		System.out.println(data);
 	    }
 	}
 	catch (FileNotFoundException e) {
-	    System.out.println("File not found");
+	    System.out.println("File can't be found, check for typos!");
 	    System.exit(1);
 	}
 	animate = false;
-    }
+}
 
     private void wait(int millis){ 
          try {
@@ -80,10 +97,6 @@ public class Maze{
 
         //COMPLETE SOLVE
         return false; //so it compiles
-    }
-
-    public static void main (String[] args) {
-	Maze m = new Maze(data1.dat);
     }
 
 }
