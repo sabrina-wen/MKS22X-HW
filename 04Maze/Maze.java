@@ -54,7 +54,12 @@ public class Maze{
 		// System.out.println(data);
 		char[] dataChar = new char[data.length()];
 		for (int i = 0; i < data.length(); i++) {
+		    if (data.charAt(i) == 'S') {
+			xcor = row;
+			ycor = i;
+		    }
 		    dataChar[i] = data.charAt(i);
+		    
 		}
 		maze[row] = dataChar;
 	        row++;
@@ -90,10 +95,11 @@ public class Maze{
       Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
     */
     public boolean solve(){
-	int startr = -1, startc = -1;
+	int startr = xcor, startc = ycor;
 	// Initialize starting row and startint col with the location of the S. 
 	maze[startr][startc] = ' '; //erase the S, and start solving!
-	return solve(startr, startc);
+	return true;
+	// return solve(startr, startc);
     }
 
     /*
