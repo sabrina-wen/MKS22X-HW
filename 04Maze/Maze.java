@@ -5,6 +5,8 @@ public class Maze{
 
     private char[][]maze;
     private boolean animate;
+    private String data;
+    private int xcor, ycor;
 
     /*Constructor loads a maze text file, and sets animate to false by default.
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -21,39 +23,58 @@ public class Maze{
 	try {
 	    File text = new File(filename);
 	    Scanner sc = new Scanner(text);
-	    int lineNumber = 1;
 	    int numS = 0;
 	    int numE = 0;
+	    int rowCount = 0;
+	    int colCount = 0;
 	    while (sc.hasNextLine()) {
-		String data = sc.nextLine();
-		for (int i = 0; i < data.length(); i++) {
-		    if (data.charAt(i) == 'S') {
+	        String line = sc.nextLine();
+		// System.out.println(line);
+		rowCount++;
+		colCount = line.length();
+		for (int i = 0; i < line.length(); i++) {
+		    if (line.charAt(i) == 'S') {
 			numS++;
 		    }
-		    if (data.charAt(i) == 'E') {
+		    if (line.charAt(i) == 'E') {
 			numE++;
 		    }
 		}
-		if (numS != 1 || numE != 1) {
-		    System.out.println("File does not contain an S and/or an E OR has too many S/E characters.");
-		    System.exit(1);
-		}
-		System.out.println(data);
 	    }
+	    if (numS != 1 || numE != 1) {
+		System.out.println("File does not contain an S and/or an E OR has too many S/E characters.");
+		// System.out.println("S chars: " + numS + " E chars: " + numE);
+		System.exit(1);
+	    }
+	    maze = new char[rowCount][colCount];
+	    sc = new Scanner(text);
+	    int row = 0;
+	    while (sc.hasNextLine()) {
+		String data = sc.nextLine();
+		// System.out.println(data);
+		char[] dataChar = new char[data.length()];
+		for (int i = 0; i < data.length(); i++) {
+		    dataChar[i] = data.charAt(i);
+		}
+		maze[row] = dataChar;
+	        row++;
+	    } 
+	    // System.out.println(maze);
 	}
+	    
 	catch (FileNotFoundException e) {
 	    System.out.println("File can't be found, check for typos!");
 	    System.exit(1);
 	}
 	animate = false;
-}
+    }
 
     private void wait(int millis){ 
-         try {
-             Thread.sleep(millis);
-         }
-         catch (InterruptedException e) {
-         }
+	try {
+	    Thread.sleep(millis);
+	}
+	catch (InterruptedException e) {
+	}
      }
 
     public void setAnimate(boolean b){
@@ -65,15 +86,14 @@ public class Maze{
         System.out.println("\033[2J\033[1;1H");
     }
 
-
     /*Wrapper Solve Function
       Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
     */
     public boolean solve(){
-            int startr=-1,startc=-1;
-            //Initialize starting row and startint col with the location of the S. 
-            maze[startr][startc] = ' ';//erase the S, and start solving!
-            return solve(startr,startc);
+	int startr = -1, startc = -1;
+	// Initialize starting row and startint col with the location of the S. 
+	maze[startr][startc] = ' '; //erase the S, and start solving!
+	return solve(startr, startc);
     }
 
     /*
@@ -98,5 +118,16 @@ public class Maze{
         //COMPLETE SOLVE
         return false; //so it compiles
     }
+
+     public String toString() {
+	String finished = "";
+	for (int r = 0; r < maze.length; r++) {
+	    for (int c = 0; c < maze[0].length; c++) {
+		finished += maze[r][c];
+	    }
+	    finished += "\n";
+	}
+	return finished;
+	} 
 
 }
