@@ -98,8 +98,7 @@ public class Maze{
 	int startr = xcor, startc = ycor;
 	// Initialize starting row and startint col with the location of the S. 
 	maze[startr][startc] = ' '; //erase the S, and start solving!
-	return true;
-	// return solve(startr, startc);
+        return solve(startr, startc);
     }
 
     /*
@@ -121,7 +120,25 @@ public class Maze{
             wait(20);
         }
 
-        //COMPLETE SOLVE
+        if (maze[row][col] == 'E') {
+	    return true;
+	}
+	if (maze[row][col] == ' ') {
+	    maze[row][col] = '@';
+	    int[] xDirections = {-1, 0, 1, 0};
+	    int[] yDirections = {0, 1, 0, -1};
+	    for (int r = 0, c = 0; r < xDirections.length && c < yDirections.length; r++, c++) {
+		int rowOffset = xDirections[r];
+		int colOffset = yDirections[c];
+		if (maze[row + rowOffset][col+colOffset] != '#'
+		    && maze[row+rowOffset][col+colOffset] != '.') {
+		    if (solve(row + rowOffset, col + colOffset)) {
+			return true;
+		    }
+		}
+	    }
+	    maze[row][col] = '.';
+	}	    
         return false; //so it compiles
     }
 
