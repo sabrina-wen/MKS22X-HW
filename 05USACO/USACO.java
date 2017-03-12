@@ -2,11 +2,20 @@ import java.util.Scanner;
 import java.io.*;
 
 public class USACO{
+    // makelake variables
     private int width, length, elevation, lakeDepth;
     private int[][] lake;
     private int[][] stomps;
-    
-    private int bronze (String file){
+    // ctravel variables
+    private int ctravelWidth, ctravelLength, time;
+    private int[][] ctravel;
+
+    public USACO() {
+    }
+
+    /** private void silver (String filename) {
+	}**/
+    public int bronze (String file){
 	try{
 	    Scanner scan = new Scanner(new File(file));
 	    length = Integer.parseInt(scan.next());
@@ -35,7 +44,7 @@ public class USACO{
 	calculate();
 	return lakeDepth;
     }
-
+    
     public void printLake(){
 	for(int r = 0; r < length; r++){
 	    for(int c = 0; c < width; c++){
@@ -89,18 +98,5 @@ public class USACO{
 	    }
 	}
 	lakeDepth = sum * 72 * 72;
-    }
-	
-    public static void main(String[]args){
-        USACO a = new USACO();
-	// System.out.println(a.width + " " + a.length);
-	// a.stomp(0,3,4);
-	// scan("text1.txt");
-	// solve();
-	// a.printLake();
-	// System.out.println();
-	System.out.println(a.bronze("test1.txt"));;
-	// a.stomp(0,0,10);
-	// a.printLake();
     }
 }
