@@ -7,14 +7,61 @@ public class USACO{
     private int[][] lake;
     private int[][] stomps;
     // ctravel variables
-    private int ctravelWidth, ctravelLength, time;
+    private int ctravelRows, ctravelCols, time, startX, startY, endX, endY;
     private int[][] ctravel;
 
     public USACO() {
     }
 
-    /** private void silver (String filename) {
-	}**/
+    public int silver (String filename) {
+	try {
+	    Scanner scan = new Scanner(new File(filename));
+	    ctravelRows = Integer.parseInt(scan.next());
+	    ctravelCols = Integer.parseInt(scan.next());
+	    time = Integer.parseInt(scan.next());
+	    ctravel = new int[ctravelRows][ctravelCols];
+
+            scan.nextLine();
+	    int[] numsInLine = new int[ctravelCols];
+		
+	    for (int r = 0; r < ctravelRows; r++) {
+		String line = scan.nextLine();
+		for (int i = 0; i < ctravelCols; i++) {
+		    if (line.charAt(i) == '*') {
+			// System.out.println("lol");
+			ctravel[r][i] = -1;
+		    }
+		    if (line.charAt(i) == '.') {
+			ctravel[r][i] = 0;
+		    }
+		}
+	    }
+
+	    startX = Integer.parseInt(scan.next());
+	    startY = Integer.parseInt(scan.next());
+	    endX = Integer.parseInt(scan.next());
+	    endY = Integer.parseInt(scan.next());
+
+	    // System.out.println(startX + "\n" + startY + "\n" + endX + "\n" + endY); 
+	}
+	catch(FileNotFoundException f){
+	    System.out.println("Invalid filename");
+	    System.exit(1);
+	}
+	return 1;
+    }
+
+    public String printctravel() {
+	String travel = "";
+	for(int r = 0; r < ctravelRows; r++){
+	    for(int c = 0; c < ctravelCols; c++){
+		travel += ctravel[r][c] + " ";
+	    }
+	    travel += "\n";
+	}
+	return travel;
+    }
+    
     public int bronze (String file){
 	try{
 	    Scanner scan = new Scanner(new File(file));
@@ -44,7 +91,7 @@ public class USACO{
 	calculate();
 	return lakeDepth;
     }
-    
+	
     public void printLake(){
 	for(int r = 0; r < length; r++){
 	    for(int c = 0; c < width; c++){
