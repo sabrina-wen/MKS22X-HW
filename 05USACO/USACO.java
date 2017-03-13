@@ -8,7 +8,7 @@ public class USACO{
     private int[][] stomps;
     // ctravel variables
     private int ctravelRows, ctravelCols, time, startX, startY, endX, endY;
-    private int[][] ctravel;
+    private int[][] ctravel, ctravelFinal;
 
     public USACO() {
     }
@@ -20,9 +20,9 @@ public class USACO{
 	    ctravelCols = Integer.parseInt(scan.next());
 	    time = Integer.parseInt(scan.next());
 	    ctravel = new int[ctravelRows][ctravelCols];
+	    ctravelFinal = new int[ctravelRows][ctravelCols];
 
             scan.nextLine();
-	    int[] numsInLine = new int[ctravelCols];
 		
 	    for (int r = 0; r < ctravelRows; r++) {
 		String line = scan.nextLine();
@@ -30,17 +30,19 @@ public class USACO{
 		    if (line.charAt(i) == '*') {
 			// System.out.println("lol");
 			ctravel[r][i] = -1;
+			ctravelFinal[r][i] = -1;
 		    }
 		    if (line.charAt(i) == '.') {
 			ctravel[r][i] = 0;
+			ctravelFinal[r][i] = 0;
 		    }
 		}
 	    }
 
-	    startX = Integer.parseInt(scan.next());
-	    startY = Integer.parseInt(scan.next());
-	    endX = Integer.parseInt(scan.next());
-	    endY = Integer.parseInt(scan.next());
+	    startX = Integer.parseInt(scan.next()) - 1;
+	    startY = Integer.parseInt(scan.next()) - 1;
+	    endX = Integer.parseInt(scan.next()) - 1;
+	    endY = Integer.parseInt(scan.next()) - 1;
 
 	    // System.out.println(startX + "\n" + startY + "\n" + endX + "\n" + endY); 
 	}
@@ -48,7 +50,40 @@ public class USACO{
 	    System.out.println("Invalid filename");
 	    System.exit(1);
 	}
-	return 1;
+	ctravel[startX][startY] = 1;
+	// move();
+	// System.out.println(neighborSum(startX + 1, startY, ctravel));
+	for (int i = 0; i < time; i++) {
+	    neighborSum();
+	    move();
+	}
+	return ctravelFinal[endX][endY];	       			
+    }
+
+    private void neighborSum() {
+        for (int r = 0; r < ctravel.length; r++) {
+	    for (int c = 0; c < ctravel[0].length; c++) {
+		int[] xDirections = {-1, 0, 1, 0};
+		int[] yDirections = {0, 1, 0, -1};
+		for (int x = 0, y = 0; r < xDirections.length && c < yDirections.length; r++, c++) {
+		    int rowOffset = r + xDirections[x];
+		    int colOffset = c + yDirections[y];
+		    if (rowOffset >= 0 && rowOffset < ctravel.length
+			&& colOffset >= 0 && colOffset < ctravel[0].length
+			&& ctravel[r][c] == 0) {
+			ctravel[r][c] += ctravel[rowOffset][colOffset];
+		    }
+		}
+	    }
+	}
+    }
+
+    private void move() {
+	for (int r = 0; r < ctravelFinal.length; r++) {
+	    for (int c = 0; c < ctravelFinal.length; c++) {
+		ctravelFinal[r][c] = ctravel[r][c];;
+	    }
+	}
     }
 
     public String printctravel() {
