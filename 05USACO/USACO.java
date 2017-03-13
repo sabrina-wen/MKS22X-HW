@@ -54,43 +54,44 @@ public class USACO{
 	// move();
 	// System.out.println(neighborSum(startX + 1, startY, ctravel));
 	for (int i = 0; i < time; i++) {
-	    neighborSum();
 	    move();
 	}
 	return ctravelFinal[endX][endY];	       			
     }
 
-    private void neighborSum() {
-        for (int r = 0; r < ctravel.length; r++) {
-	    for (int c = 0; c < ctravel[0].length; c++) {
-		int[] xDirections = {-1, 0, 1, 0};
-		int[] yDirections = {0, 1, 0, -1};
-		for (int x = 0, y = 0; r < xDirections.length && c < yDirections.length; r++, c++) {
-		    int rowOffset = r + xDirections[x];
-		    int colOffset = c + yDirections[y];
-		    if (rowOffset >= 0 && rowOffset < ctravel.length
-			&& colOffset >= 0 && colOffset < ctravel[0].length
-			&& ctravel[r][c] == 0) {
-			ctravel[r][c] += ctravel[rowOffset][colOffset];
-		    }
-		}
+    private int neighborSum(int r, int c) {
+	int endVal = 0;
+	int[] xDirections = {-1, 0, 1, 0};
+	int[] yDirections = {0, 1, 0, -1};
+	for (int x = 0, y = 0; r < xDirections.length && c < yDirections.length; r++, c++) {
+	    int rowOffset = r + xDirections[x];
+	    int colOffset = c + yDirections[y];
+	    if (rowOffset >= 0 && rowOffset < ctravel.length
+		&& colOffset >= 0 && colOffset < ctravel[0].length
+		&& ctravel[rowOffset][colOffset] != -1) {
+		endVal += ctravel[rowOffset][colOffset];
 	    }
 	}
+	return endVal;
     }
 
     private void move() {
-	for (int r = 0; r < ctravelFinal.length; r++) {
-	    for (int c = 0; c < ctravelFinal.length; c++) {
-		ctravelFinal[r][c] = ctravel[r][c];;
+	for (int r = 0; r < ctravel.length; r++) {
+	    for (int c = 0; c < ctravel[0].length; c++) {
+		if (ctravel[r][c] == 0) {
+		    ctravel[r][c] = neighborSum(r,c);
+		}
+		 System.out.println("" + ctravel[r][c]);
 	    }
+	    System.out.println();
 	}
     }
 
     public String printctravel() {
 	String travel = "";
-	for(int r = 0; r < ctravelRows; r++){
-	    for(int c = 0; c < ctravelCols; c++){
-		travel += ctravel[r][c] + " ";
+	for(int r = 0; r < ctravelFinal.length; r++){
+	    for(int c = 0; c < ctravelFinal[0].length; c++){
+		travel += ctravelFinal[r][c] + " ";
 	    }
 	    travel += "\n";
 	}
