@@ -7,8 +7,8 @@ public class USACO{
     private int[][] lake;
     private int[][] stomps;
     // ctravel variables
-    private int ctravelRows, ctravelCols, time, startX, startY, endX, endY;
-    private int[][] ctravel, ctravelFinal;
+    private int ctravelRows, ctravelCols, time, startX, startY, endX, endY, end;
+    private int[][] ctravel, temp;
 
     public USACO() {
     }
@@ -20,7 +20,7 @@ public class USACO{
 	    ctravelCols = Integer.parseInt(scan.next());
 	    time = Integer.parseInt(scan.next());
 	    ctravel = new int[ctravelRows][ctravelCols];
-	    ctravelFinal = new int[ctravelRows][ctravelCols];
+	    temp = new int[ctravelRows][ctravelCols];
 
             scan.nextLine();
 		
@@ -30,11 +30,11 @@ public class USACO{
 		    if (line.charAt(i) == '*') {
 			// System.out.println("lol");
 			ctravel[r][i] = -1;
-			ctravelFinal[r][i] = -1;
+			temp[r][i] = -1;
 		    }
 		    if (line.charAt(i) == '.') {
 			ctravel[r][i] = 0;
-			ctravelFinal[r][i] = 0;
+			temp[r][i] = 0;
 		    }
 		}
 	    }
@@ -53,17 +53,19 @@ public class USACO{
 	ctravel[startX][startY] = 1;
 	// move();
 	// System.out.println(neighborSum(startX + 1, startY, ctravel));
-	for (int i = 0; i < time; i++) {
+	// manually testing firstMove fn - works,
+	// but need to figure out how to do this in a loop/recursively
+	for (int i = 0; i < time; i ++) {
 	    move();
 	}
-	return ctravelFinal[endX][endY];	       			
+	return ctravel[endX][endY];
     }
 
-    private int neighborSum(int r, int c) {
+    /** private int neighborSum(int r, int c) {
 	int endVal = 0;
 	int[] xDirections = {-1, 0, 1, 0};
 	int[] yDirections = {0, 1, 0, -1};
-	for (int x = 0, y = 0; r < xDirections.length && c < yDirections.length; r++, c++) {
+	for (int x = 0, y = 0; r < xDirections.length && c < yDirections.length; x++, y++) {
 	    int rowOffset = r + xDirections[x];
 	    int colOffset = c + yDirections[y];
 	    if (rowOffset >= 0 && rowOffset < ctravel.length
@@ -72,26 +74,51 @@ public class USACO{
 		endVal += ctravel[rowOffset][colOffset];
 	    }
 	}
-	return endVal;
-    }
+        return endVal;
+	} **/
+
+    // hardcode to test it out
+    private int neighborSum(int xcor, int ycor) {
+	int sum = 0;
+	if (xcor - 1 >= 0 && temp[xcor - 1][ycor] != -1) {
+	    sum += temp[xcor - 1][ycor];
+	}
+	if (ycor + 1 < temp[0].length && temp[xcor][ycor + 1] != -1) {
+	    sum += temp[xcor][ycor + 1];
+	}
+	if (xcor + 1 < temp.length && temp[xcor + 1][ycor] != -1) {
+	    sum += temp[xcor + 1][ycor];
+	}
+	if (ycor - 1 >= 0 && temp[xcor][ycor - 1] != -1) {
+	    sum += temp[xcor][ycor - 1];
+	}
+	return sum;
+	//System.out.println(printctravel());
+    } 
 
     private void move() {
-	for (int r = 0; r < ctravel.length; r++) {
-	    for (int c = 0; c < ctravel[0].length; c++) {
-		if (ctravel[r][c] == 0) {
-		    ctravel[r][c] = neighborSum(r,c);
+	for (int r = 0; r < temp.length; r++) {
+	    for (int c = 0; c < temp[0].length; c++) {
+		if (temp[r][c] != -1) {
+		    temp[r][c] = neighborSum(r,c);
+		    ctravel[r][c] = temp[r][c];
+		    temp[r][c] = 0;
 		}
-		 System.out.println("" + ctravel[r][c]);
 	    }
-	    System.out.println();
 	}
+	/* for (int r = 0; r < ctravel.length; r++) {
+	    for (int c = 0; c < ctravel[0].length; c++) {
+		ctravel[r][c] = temp[r][c];
+	    }
+	    } */
+        System.out.println(printctravel());
     }
 
     public String printctravel() {
 	String travel = "";
-	for(int r = 0; r < ctravelFinal.length; r++){
-	    for(int c = 0; c < ctravelFinal[0].length; c++){
-		travel += ctravelFinal[r][c] + " ";
+	for (int r = 0; r < temp.length; r++){
+	    for(int c = 0; c < temp[0].length; c++){
+		travel += temp[r][c] + " ";
 	    }
 	    travel += "\n";
 	}
