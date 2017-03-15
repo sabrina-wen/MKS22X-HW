@@ -51,6 +51,8 @@ public class USACO{
 	    System.exit(1);
 	}
 	ctravel[startX][startY] = 1;
+	// manually testing neighborSum - it does work!
+	// System.out.println(neighborSum(0, 1));
 	// move();
 	// System.out.println(neighborSum(startX + 1, startY, ctravel));
 	// manually testing firstMove fn - works,
@@ -58,6 +60,7 @@ public class USACO{
 	for (int i = 0; i < time; i ++) {
 	    move();
 	}
+	replace();
 	return ctravel[endX][endY];
     }
 
@@ -101,17 +104,18 @@ public class USACO{
 	    for (int c = 0; c < temp[0].length; c++) {
 		if (temp[r][c] != -1) {
 		    temp[r][c] = neighborSum(r,c);
-		    ctravel[r][c] = temp[r][c];
-		    temp[r][c] = 0;
 		}
 	    }
 	}
-	/* for (int r = 0; r < ctravel.length; r++) {
+        System.out.println(printctravel());
+    }
+
+    private void replace() {
+	for (int r = 0; r < ctravel.length; r++) {
 	    for (int c = 0; c < ctravel[0].length; c++) {
 		ctravel[r][c] = temp[r][c];
 	    }
-	    } */
-        System.out.println(printctravel());
+	} 
     }
 
     public String printctravel() {
