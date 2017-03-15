@@ -51,6 +51,8 @@ public class USACO{
 	    System.exit(1);
 	}
 	ctravel[startX][startY] = 1;
+	temp[startX][startY] = 1;
+	System.out.println(printctravel());
 	// manually testing neighborSum - it does work!
 	// System.out.println(neighborSum(0, 1));
 	// move();
@@ -59,8 +61,8 @@ public class USACO{
 	// but need to figure out how to do this in a loop/recursively
 	for (int i = 0; i < time; i ++) {
 	    move();
+	    replace();
 	}
-	replace();
 	return ctravel[endX][endY];
     }
 
