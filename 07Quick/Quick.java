@@ -36,7 +36,7 @@ public class Quick {
 	    data[end] = data[startIndex];
 	    data[startIndex] = newEndHolder;
 	
-	System.out.println(printArray(data));
+	    // System.out.println(printArray(data));
 	return startIndex;
     }
 
@@ -59,13 +59,32 @@ public class Quick {
 	     if k == index that's returned ur good
 	     if k > index, partition all of index (not including index) to end (the bigger side)
 	     if k < index, partition all of beginning of ary to index (not including index) (smaller side)
-	     i think this would be a loop and the first if statement would be your base case... **/
+	     i think this would be a loop and the first if statement would be your base case...
+	     returns val of kth smallest element **/
+	return quickSelectH(data, 0, data.length - 1, k);
     }
+
+    // lets say you want the 3rd smallest element, but you partition is so that you know the 7th element in a list of 10 elements. index = 7, k = 3
+    public static int quickSelectH(int[] data, int start, int end, int k) {
+	int index = partition(data, start, end);
+	while (k != index) {
+	    if (index > k) {
+		quickSelectH(data, start, index - 1, k);
+	    }
+	    if (index < k) {
+		quickSelectH(data, index + 1, data.length - 1, k);
+	    }
+	    System.out.println(printArray(data));
+	}
+	return data[k];
+    }
+		
 	
     public static void main (String[] args) {
 	int[] test = {999,999,999,4,1,0,3,2,999,999,999};
 	int[] test1 = {8, 90, 45, -18, -3, 11, 3, 8};
 	int[] test2 = {1, 12, 5, 26, 7, 14, 3, 7, 2};
-	System.out.println(partition(test1, 0, test1.length - 1));
+	// System.out.println(partition(test1, 0, test1.length - 1));
+	System.out.println(quickSelect(test, 3));
     }
 }
