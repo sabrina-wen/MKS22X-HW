@@ -52,6 +52,15 @@ public class Quick {
 	}
 	return ary;
     }
+
+    public static int quickSelect(int[] data, int k) {
+	/**  psuedocode idea:
+	     run thru partition once so that u have one val in the right place
+	     if k == index that's returned ur good
+	     if k > index, partition all of index (not including index) to end (the bigger side)
+	     if k < index, partition all of beginning of ary to index (not including index) (smaller side)
+	     i think this would be a loop and the first if statement would be your base case... **/
+    }
 	
     public static void main (String[] args) {
 	int[] test = {999,999,999,4,1,0,3,2,999,999,999};
