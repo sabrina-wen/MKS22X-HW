@@ -52,7 +52,7 @@ public class USACO{
 	}
 	ctravel[startX][startY] = 1;
 	temp[startX][startY] = 1;
-	System.out.println(printctravel());
+	// System.out.println(printctravel());
 	// manually testing neighborSum - it does work!
 	// System.out.println(neighborSum(0, 1));
 	// move();
@@ -83,7 +83,8 @@ public class USACO{
 	} **/
 
     // hardcode to test it out
-    private int neighborSum(int xcor, int ycor) {
+    // temp is the name of the input of the array, not necessarily the array i named temp earlier
+    private int neighborSum(int xcor, int ycor, int[][] temp) {
 	int sum = 0;
 	if (xcor - 1 >= 0 && temp[xcor - 1][ycor] != -1) {
 	    sum += temp[xcor - 1][ycor];
@@ -105,11 +106,11 @@ public class USACO{
 	for (int r = 0; r < temp.length; r++) {
 	    for (int c = 0; c < temp[0].length; c++) {
 		if (temp[r][c] != -1) {
-		    temp[r][c] = neighborSum(r,c);
+		    temp[r][c] = neighborSum(r,c,ctravel);
 		}
 	    }
 	}
-        System.out.println(printctravel());
+        // System.out.println(printctravel());
     }
 
     private void replace() {
@@ -122,9 +123,9 @@ public class USACO{
 
     public String printctravel() {
 	String travel = "";
-	for (int r = 0; r < temp.length; r++){
-	    for(int c = 0; c < temp[0].length; c++){
-		travel += temp[r][c] + " ";
+	for (int r = 0; r < ctravel.length; r++){
+	    for(int c = 0; c < ctravel[0].length; c++){
+		travel += ctravel[r][c] + " ";
 	    }
 	    travel += "\n";
 	}
