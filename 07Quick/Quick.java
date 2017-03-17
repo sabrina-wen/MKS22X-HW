@@ -36,7 +36,7 @@ public class Quick {
 	    data[end] = data[startIndex];
 	    data[startIndex] = newEndHolder;
 	
-	    // System.out.println(printArray(data));
+	    // System.out.println("Value: " + data[startIndex]);
 	return startIndex;
     }
 
@@ -53,6 +53,11 @@ public class Quick {
 	return ary;
     }
 
+    /** public static void testPartition() {
+	Random randAryElements = new Random();
+	int[] randomAry = new int[-1000 + randAryElements.nextInt(end - start + 1);
+	} **/
+
     public static int quickSelect(int[] data, int k) {
 	/**  psuedocode idea:
 	     run thru partition once so that u have one val in the right place
@@ -67,16 +72,20 @@ public class Quick {
     // lets say you want the 3rd smallest element, but you partition is so that you know the 7th element in a list of 10 elements. index = 7, k = 3
     public static int quickSelectH(int[] data, int start, int end, int k) {
 	int index = partition(data, start, end);
-	while (k != index) {
-	    if (index > k) {
-		quickSelectH(data, start, index - 1, k);
-	    }
-	    if (index < k) {
-		quickSelectH(data, index + 1, data.length - 1, k);
-	    }
-	    System.out.println(printArray(data));
+	int retVal = 0;;
+        if (k == index) {
+	    retVal = data[k];
 	}
-	return data[k];
+	if (index > k) {
+	    quickSelectH(data, start, index - 1, k);
+	    // partition(data, start, index - 1);
+	}
+	if (index < k) {
+	    quickSelectH(data, index + 1, data.length - 1, k);
+	    // partition(data, index + 1, data.length - 1);
+	}
+	// System.out.println(printArray(data));
+	return retVal;
     }
 		
 	
