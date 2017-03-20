@@ -58,6 +58,7 @@ public class Quick {
 	int[] randomAry = new int[-1000 + randAryElements.nextInt(end - start + 1);
 	} **/
 
+    // selecting kth element method
     public static int quickSelect(int[] data, int k) {
 	/**  psuedocode idea:
 	     run thru partition once so that u have one val in the right place
@@ -69,17 +70,23 @@ public class Quick {
 	return quickSelectH(data, 0, data.length - 1, k);
     }
 
-    // lets say you want the 3rd smallest element, but you partition is so that you know the 7th element in a list of 10 elements. index = 7, k = 3
+    // selecting kth element helper method
     public static int quickSelectH(int[] data, int start, int end, int k) {
 	int index = partition(data, start, end);
+	System.out.println(printArray(data));
+	System.out.println("index val: " + index);
         if (k == index) {
-	    return data[index];
+	    System.out.println(printArray(data));
+	    return data[index - 1];
 	}
-	if (index > k) {
-	    quickSelectH(data, start, index, k);
-	    // partition(data, start, index - 1);
+	else if (index < k) {
+	    System.out.println(printArray(data));
+	    System.out.println("index val: " + index);
+	    return quickSelectH(data, index + 1, end - 1, k);
 	}
-	return quickSelectH(data, index + 1, end - 1, k);
+	System.out.println(printArray(data));
+	System.out.println("index val: " + index);
+	return quickSelectH(data, start, index - 1, k);
 	// partition(data, index + 1, data.length - 1);
 	
     }
@@ -90,6 +97,6 @@ public class Quick {
 	int[] test1 = {8, 90, 45, -18, -3, 11, 3, 8};
 	int[] test2 = {1, 12, 5, 26, 7, 14, 3, 7, 2};
 	// System.out.println(partition(test1, 0, test1.length - 1));
-	System.out.println(quickSelect(test, 3));
+	System.out.println(quickSelect(test1, 3));
     }
 }
