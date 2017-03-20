@@ -72,20 +72,16 @@ public class Quick {
     // lets say you want the 3rd smallest element, but you partition is so that you know the 7th element in a list of 10 elements. index = 7, k = 3
     public static int quickSelectH(int[] data, int start, int end, int k) {
 	int index = partition(data, start, end);
-	int retVal = 0;;
         if (k == index) {
-	    retVal = data[k];
+	    return data[index];
 	}
 	if (index > k) {
-	    quickSelectH(data, start, index - 1, k);
+	    quickSelectH(data, start, index, k);
 	    // partition(data, start, index - 1);
 	}
-	if (index < k) {
-	    quickSelectH(data, index + 1, data.length - 1, k);
-	    // partition(data, index + 1, data.length - 1);
-	}
-	// System.out.println(printArray(data));
-	return retVal;
+	return quickSelectH(data, index + 1, end - 1, k);
+	// partition(data, index + 1, data.length - 1);
+	
     }
 		
 	
