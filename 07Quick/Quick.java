@@ -58,7 +58,7 @@ public class Quick {
 	int[] randomAry = new int[-1000 + randAryElements.nextInt(end - start + 1);
 	} **/
 
-    // selecting kth element method
+    // selecting kth element method, not working will return to this later
     public static int quickSelect(int[] data, int k) {
 	/**  psuedocode idea:
 	     run thru partition once so that u have one val in the right place
@@ -89,6 +89,30 @@ public class Quick {
 	return quickSelectH(data, start, index - 1, k);
 	// partition(data, index + 1, data.length - 1);
 	
+    }
+
+    public static void swap(int[] ary, int numOne, int numTwo) {
+	int holder = ary[numOne];
+	data[numOne] = data[numTwo];
+	data[numTwo] = holder;
+    }
+    
+    public static void quickSort(int[] a) {
+	return quickSortH(a, k);
+    }
+
+    public static int quickSelect(int[] data, int k) {
+	int pivot = partition(data, 0, data.length - 1);
+	int q1 = pivot - 1;
+	int q3 = pivot + 1;
+	while (pivot <= q3) {
+	    if (data[pivot] == data[k]) {
+		pivot++;
+	    }
+	    else if (data[pivot] > data[k]) {
+		swap(a, pivot, q1);
+	    }
+	}
     }
 		
 	
