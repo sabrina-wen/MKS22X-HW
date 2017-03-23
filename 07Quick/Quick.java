@@ -98,21 +98,24 @@ public class Quick {
     }
     
     public static void quickSort(int[] a) {
-	return quickSortH(a, k);
+	
+	// System.out.println("Finished array: " + printArray(data));
+        return quickSortH(a, 0, a.length - 1);
+	
     }
 
     // copy of partition...
-   public static int quickSortH(int[] data, int start, int end) {
+   public static void quickSortH(int[] data, int start, int end) {
        // swap in beginning
        // do the dutch flag thing from notes
 	
-	Random randgen = new Random();
+        Random randgen = new Random();
 	int pivotIndex = start + randgen.nextInt(end - start + 1);
 	int pivotVal = data[pivotIndex];
 	int lastNumHolder = data[end];
 	data[end] = pivotVal;
 	data[pivotIndex] = lastNumHolder;
-        int v = ary
+	int startIndex = start;
 	
 	for (int i = start; i < end; i++) {
 	    if (data[start] < data[end]) {
@@ -128,9 +131,27 @@ public class Quick {
 	    data[startIndex] = newEndHolder;
 	
 	    // System.out.println("Value: " + data[startIndex]);
-	return startIndex;
-	System.out.println(printArray(data));
-	System.out.println("Lowest val: " + low + " lt: " + lt + " gt: " + " pivot: " + "high: ");
+	    // return startIndex; <-- index of partitioned val (the only sorted val so far)
+	    // System.out.println(printArray(data));
+	    // System.out.println("Lowest val: " + low + " lt: " + lt + " gt: " + " pivot: " + "high: ");
+
+	    int lt = 0;
+	    int gt = end;
+	    while (startIndex <= gt) {
+		if (data[startIndex] == data[0]) {
+		    startIndex++;
+		}
+		else if (data[startIndex] > data[0]) {
+		    swap(data, startIndex, lt);
+		    gt--;
+		}
+		else {
+		    swap(data, lt, startIndex);
+		    startIndex++;
+		    lt++;
+		}
+		System.out.println(printArray(data));
+	    }
    }
 		
 	
@@ -139,6 +160,6 @@ public class Quick {
 	int[] test1 = {8, 90, 45, -18, -3, 11, 3, 8};
 	int[] test2 = {1, 12, 5, 26, 7, 14, 3, 7, 2};
 	// System.out.println(partition(test1, 0, test1.length - 1));
-	System.out.println(quickSort(test, 3));
+	System.out.println(quickSort(test));
     }
 }
