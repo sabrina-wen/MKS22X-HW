@@ -108,10 +108,11 @@ public class Quick {
    public static void quickSortH(int[] data, int start, int end) {
        // swap in beginning
        // do the dutch flag thing from notes
-       System.out.println("Start val: " + start + " end val: " + end);
-        Random randgen = new Random();
-	int pivotIndex = start + randgen.nextInt(end - start + 1);
-	int pivotVal = data[pivotIndex];
+       int pivotIndex = partition(data, start, end);
+       // System.out.println("Start val: " + start + " end val: " + end);
+       // Random randgen = new Random();
+       // int pivotIndex = start + randgen.nextInt(end - start + 1);
+	/** int pivotVal = data[pivotIndex];
 	int lastNumHolder = data[end];
 	data[end] = pivotVal;
 	data[pivotIndex] = lastNumHolder;
@@ -128,13 +129,14 @@ public class Quick {
 	}
 	int newEndHolder = data[end];
 	    data[end] = data[startIndex];
-	    data[startIndex] = newEndHolder;
+	    data[startIndex] = newEndHolder; 
 	
 	    // System.out.println("Value: " + data[startIndex]);
 	    // return startIndex; <-- index of partitioned val (the only sorted val so far)
 	    // System.out.println(printArray(data));
 	    // System.out.println("Lowest val: " + low + " lt: " + lt + " gt: " + " pivot: " + "high: ");
-	    swap(data, start, startIndex);
+	    // start = 0; **/
+	    swap(data, start, pivotIndex);
 	    int v = data[start];
 	    int i = start;
 	    int lt = start;
@@ -144,7 +146,7 @@ public class Quick {
 		    i++;
 		}
 		else if (data[i] > v) {
-		    swap(data, i, lt);
+		    swap(data, i, gt);
 		    gt--;
 		}
 		else {
@@ -152,11 +154,14 @@ public class Quick {
 		    i++;
 		    lt++;
 		}
-		System.out.println("Pivot val: " + startIndex + " lt: " + lt + " gt: " + gt);
+		System.out.println("Pivot val: " + pivotIndex + " lt: " + lt + " gt: " + gt);
 		System.out.println(printArray(data));
 	    }
-	    quickSortH(data, start, lt - 1);
-	    quickSortH(data, gt, end);
+
+	    if (start > end) {
+		quickSortH(data, start, lt - 1);
+		quickSortH(data, gt, end);
+	    }
    }
 		
 	
