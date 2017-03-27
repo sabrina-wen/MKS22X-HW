@@ -73,22 +73,22 @@ public class Quick {
     // selecting kth element helper method
     public static int quickSelectH(int[] data, int start, int end, int k) {
 	int index = partition(data, start, end);
-	System.out.println(printArray(data));
-	System.out.println("index val: " + index);
-        if (k == index) {
-	    System.out.println(printArray(data));
-	    return data[index - 1];
-	}
-	else if (index < k) {
+	if (k > index) {
 	    System.out.println(printArray(data));
 	    System.out.println("index val: " + index);
-	    return quickSelectH(data, index + 1, end - 1, k);
+	    return quickSelectH(data, index + 1, end, k);
 	}
-	System.out.println(printArray(data));
-	System.out.println("index val: " + index);
-	return quickSelectH(data, start, index - 1, k);
-	// partition(data, index + 1, data.length - 1);
-	
+	else if (k < index) {
+	    System.out.println(printArray(data));
+	    System.out.println("index val: " + index);
+	    return quickSelectH(data, start, index - 1, k);
+	}
+	else {
+	    // System.out.println(k);
+	    // System.out.println(printArray(data));
+	    // System.out.println("index val: " + index);
+	    return data[k];
+	}
     }
 
     public static void swap(int[] data, int numOne, int numTwo) {
@@ -97,43 +97,44 @@ public class Quick {
 	data[numTwo] = holder;
     }
     
-    public static void quickSort(int[] a) {
+    public static int[] quickSort(int[] a) {
         
         quickSortH(a, 0, a.length - 1);
-        System.out.println("Finished array: " + printArray(a));
+	return a;
+        // System.out.println("Finished array: " + printArray(a));
 	
     }
 
     // copy of partition...
    public static void quickSortH(int[] data, int start, int end) {
        if (start < end) {
-       // swap in beginning
-       // do the dutch flag thing from notes
-       // int pivotIndex = partition(data, start, end);
-       // System.out.println("Start val: " + start + " end val: " + end);
-       Random randgen = new Random();
-       int pivotIndex = start + randgen.nextInt(end - start + 1);
-       swap(data, start, pivotIndex);
-       int v = data[start];
-       int i = start;
-       int lt = start;
-       int gt = end;
-       while (i <= gt) {
-	   if (data[i] == v) {
-	       i++;
+	   // swap in beginning
+	   // do the dutch flag thing from notes
+	   // int pivotIndex = partition(data, start, end);
+	   // System.out.println("Start val: " + start + " end val: " + end);
+	   Random randgen = new Random();
+	   int pivotIndex = start + randgen.nextInt(end - start + 1);
+	   swap(data, start, pivotIndex);
+	   int v = data[start];
+	   int i = start;
+	   int lt = start;
+	   int gt = end;
+	   while (i <= gt) {
+	       if (data[i] == v) {
+		   i++;
+	       }
+	       else if (data[i] > v) {
+		   swap(data, i, gt);
+		   gt--;
+	       }
+	       else {
+		   swap(data, lt, i);
+		   i++;
+		   lt++;
+	       }
+	       System.out.println("Pivot val: " + pivotIndex + " lt: " + lt + " gt: " + gt);
+	       System.out.println(printArray(data));
 	   }
-	   else if (data[i] > v) {
-	       swap(data, i, gt);
-	       gt--;
-	   }
-	   else {
-	       swap(data, lt, i);
-	       i++;
-	       lt++;
-	   }
-	   System.out.println("Pivot val: " + pivotIndex + " lt: " + lt + " gt: " + gt);
-	   System.out.println(printArray(data));
-       }
 
 	   quickSortH(data, start, lt - 1);
 	   quickSortH(data, gt, end);
@@ -149,6 +150,6 @@ public class Quick {
 	int[] test2 = {1, 12, 5, 26, 7, 14, 3, 7, 2};
 	int[] test4 = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 	// System.out.println(partition(test1, 0, test1.length - 1));
-	quickSort(test2);
+	quickSelect(test, 8);
     }
 }
