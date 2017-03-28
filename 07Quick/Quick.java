@@ -53,11 +53,6 @@ public class Quick {
 	return ary;
     }
 
-    /** public static void testPartition() {
-	Random randAryElements = new Random();
-	int[] randomAry = new int[-1000 + randAryElements.nextInt(end - start + 1);
-	} **/
-
     // selecting kth element method, not working will return to this later
     public static int quickSelect(int[] data, int k) {
 	/**  psuedocode idea:
@@ -74,13 +69,13 @@ public class Quick {
     public static int quickSelectH(int[] data, int start, int end, int k) {
 	int index = partition(data, start, end);
 	if (k > index) {
-	    System.out.println(printArray(data));
-	    System.out.println("index val: " + index);
+	    // System.out.println(printArray(data));
+	    // System.out.println("index val: " + index);
 	    return quickSelectH(data, index + 1, end, k);
 	}
 	else if (k < index) {
-	    System.out.println(printArray(data));
-	    System.out.println("index val: " + index);
+	    // System.out.println(printArray(data));
+	    // System.out.println("index val: " + index);
 	    return quickSelectH(data, start, index - 1, k);
 	}
 	else {
@@ -132,8 +127,8 @@ public class Quick {
 		   i++;
 		   lt++;
 	       }
-	       System.out.println("Pivot val: " + pivotIndex + " lt: " + lt + " gt: " + gt);
-	       System.out.println(printArray(data));
+	       // System.out.println("Pivot val: " + pivotIndex + " lt: " + lt + " gt: " + gt);
+	       // System.out.println(printArray(data));
 	   }
 
 	   quickSortH(data, start, lt - 1);
@@ -144,12 +139,12 @@ public class Quick {
    }
 		
 	
-    public static void main (String[] args) {
+    /** public static void main (String[] args) {
 	int[] test = {999,999,999,4,1,0,3,2,999,999,999};
 	int[] test1 = {8, 90, 45, -18, -3, 11, 3, 8};
 	int[] test2 = {1, 12, 5, 26, 7, 14, 3, 7, 2};
 	int[] test4 = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 	// System.out.println(partition(test1, 0, test1.length - 1));
 	quickSelect(test, 8);
-    }
+    } **/
 }
