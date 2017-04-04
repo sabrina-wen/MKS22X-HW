@@ -26,7 +26,8 @@ public class MyLinkedList {
     // for now i'm adding an element to the beginning of the list
     public boolean add (int value) {
 	if (size > 0) {
-	    LNode addedVal = new LNode(value, start);
+	    start = new LNode(value, start);
+	    // System.out.println(addedVal.next.currentVal);
 	}
 	if (size == 0) {
 	    start = new LNode(value, null);
@@ -54,6 +55,7 @@ public class MyLinkedList {
 	MyLinkedList list1 = new MyLinkedList();
 	list1.add(11);
        	list1.add(541);
+	list1.add(-19);
 	System.out.println(list1.toString());
     }
 }
