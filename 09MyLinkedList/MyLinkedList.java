@@ -1,36 +1,52 @@
 public class MyLinkedList {
-    private LNode start, end;
-    private int size;
+    LNode head, tail;
+    int size;
 
     public MyLinkedList() {
-	start = null;
-	end = null;
+	head = null;
+	tail = null;
 	size = 0;
     }
 
     private class LNode {
-	private int currentVal;
-	private LNode next;
+	int value;
+        LNode next, prev;
 
 	// note: if it's the last element then next = null
-	public LNode (int value, LNode next) {
-	    currentVal = value;
-	    this.next = next;
+	public LNode (int value) {
+	    this.value = value;
 	}
+
+	public String toString() {
+	    return "" + value;
+	}
+    }
+
+    public String toString() {
+	String strList = "[";
+	LNode current = head;
+	while (current != null) {
+	    strList += current.value + ", ";
+	    current = current.next;
+	}
+	strList += "]";
+	return strList;
     }
 
     public int size() {
 	return size;
     }
 
-    // for now i'm adding an element to the beginning of the list
     public boolean add (int value) {
-	if (size > 0) {
-	    start = new LNode(value, start);
-	    // System.out.println(addedVal.next.currentVal);
+	if (head == null) {
+	    head = new LNode(value);
 	}
-	if (size == 0) {
-	    start = new LNode(value, null);
+	else {
+	    LNode current = head;
+	    while (current.next != null) {
+		current = current.next;
+	    }
+	    current.next = new LNode(value);
 	}
 	size++;
 	return true;
@@ -40,19 +56,8 @@ public class MyLinkedList {
 	// idk
     }
 
-    public String toString() {
-	String strList = "[";
-	LNode current = start;
-        while (current != null) {
-	    strList += current.currentVal + ", ";
-	    current = current.next;
-	}
-	strList += "]";
-	return strList;
-    }
-
     public static void main (String[] args) {
-	MyLinkedList list1 = new MyLinkedList();
+        MyLinkedList list1 = new MyLinkedList();
 	list1.add(11);
        	list1.add(541);
 	list1.add(-19);
