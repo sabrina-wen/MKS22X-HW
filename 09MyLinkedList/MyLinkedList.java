@@ -52,6 +52,48 @@ public class MyLinkedList {
 	return true;
     }
 
+    public int get (int index) {
+	/** if (index < 0 || index > size()) {
+	    throw IndexNotFoundException();
+	    } **/
+	int counter = 0;
+	LNode current = head;
+	while (current.next != null && counter != index) {
+	    System.out.println("!");
+	    current = current.next;
+	    counter++;
+	}
+	return current.value;
+    }
+
+    public int set(int index, int value) {
+	/** if (index < 0 || index > size()) {
+	    throw IndexNotFoundException();
+	    } **/
+	int counter = 0;
+	LNode current = head;
+	while (current.next != null && counter != index) {
+	    System.out.println("!");
+	    current = current.next;
+	    counter++;
+	}
+	current.value = value;
+	return current.value;
+    }
+
+    /** public int indexOf(int value) {
+    }
+
+    private LNode getNthNode(int in) {
+    }
+
+    private void remove(LNode target) {
+    }
+
+    public int remove(int index) {
+    } **/
+
+
     public void add (int index, int value) {
 	// idk
     }
@@ -62,5 +104,7 @@ public class MyLinkedList {
        	list1.add(541);
 	list1.add(-19);
 	System.out.println(list1.toString());
+	System.out.println(list1.get(2));
+	System.out.println(list1.set(2, 7));
     }
 }
