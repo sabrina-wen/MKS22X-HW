@@ -53,9 +53,9 @@ public class MyLinkedList {
     }
 
     public int get (int index) {
-	/** if (index < 0 || index > size()) {
-	    throw IndexNotFoundException();
-	    } **/
+        if (index < 0 || index > size()) {
+	    throw new IndexOutOfBoundsException();
+	} 
 	int counter = 0;
 	LNode current = head;
 	while (current.next != null && counter != index) {
@@ -81,34 +81,19 @@ public class MyLinkedList {
 	current.value = value;
 	return oldVal;
     }
-
-    /** private LNode getNthNode (int n) {
-	if (n < 0) {
-	    n += size;
-	}
-	if (n == 0
-    }
-    /** public int indexOf(int value) {
-	int counter = 0;
-	boolean ifInList = true;
-	LNode current = head;
-	while (current.next != null) {
-	    System.out.println("Iterate");
-	    if (current.value == value) {
-		System.out.println("counter val: " + counter);
-	        return counter;
+	
+    public int indexOf(int value) {
+        int counter = 0;
+	while (counter < size) {
+	    if (get(counter) == value) {
+		return counter;
 	    }
-	    current = current.next;
 	    counter++;
-	    // System.out.println("Iterate");
-	    if (counter == size && current.value != value) {
-		counter = -1;
-	    }
 	}
-	return counter;
+	return -1;
     }
 
-    private void remove(LNode target) {
+    /** private void remove(LNode target) {
     }
 
     public int remove(int index) {
@@ -126,9 +111,9 @@ public class MyLinkedList {
 	list1.add(-19);
 	System.out.println(list1.toString());
 	// System.out.println(list1.get(2));
-	System.out.println(list1.set(2, 7));
+	//System.out.println(list1.set(2, 7));
 	System.out.println("new list " + list1);
-	// System.out.println(list1.indexOf(1));
+        System.out.println(list1.indexOf(-190));
 	
     }
 }
