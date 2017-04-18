@@ -93,11 +93,46 @@ public class MyLinkedList {
 	return -1;
     }
 
-    /** private void remove(LNode target) {
+    private LNode remove (LNode current) {
+	if (current.prev != null && current.next != null) {
+	    current.prev.next = current.next;
+	    current.next.prev = current.prev;
+	}
+	else if (current.prev == null && current.next == null) {
+	    head = null;
+	    tail = null;
+	}
+	else if (current.prev == null) { // if head element
+	    head = current.next;
+	    current.next.prev = null;
+	}
+	else { // assuming current.next == null
+	    tail = current.prev;
+	    current.prev.next = null;
+	}
+	size--;
+	return current;
     }
 
-    public int remove(int index) {
-    } **/
+    // shoulda written this originally :(
+    private LNode getNthNode(int n) {
+	if (n < 0 || n > size) {
+	    throw new IndexOutOfBoundsException();
+	}
+	LNode current = head;
+	int counter = 0;
+	while (counter < n) {
+	    current = current.next;
+	    counter++;
+	}
+	// System.out.println(current.value);
+	return current;
+    }
+
+    /** public int remove(int index) {
+	LNode val = get
+        
+	} **/
 
 
     public void add (int index, int value) {
@@ -109,11 +144,11 @@ public class MyLinkedList {
 	list1.add(11);
        	list1.add(541);
 	list1.add(-19);
-	System.out.println(list1.toString());
+	System.out.println(list1);
 	// System.out.println(list1.get(2));
 	//System.out.println(list1.set(2, 7));
-	System.out.println("new list " + list1);
-        System.out.println(list1.indexOf(-190));
+	// System.out.println("new list " + list1);
+        System.out.println(list1.getNthNode(1));
 	
     }
 }
