@@ -38,9 +38,22 @@ public class MyLinkedList {
     }
 
     public void add (int index, int value) {
-	// idk
+	LNode location;
+	if (index < 0 || index > size + 1) {
+	    throw new IndexOutOfBoundsException();
+	}
+	if (index != 0) {
+	   location = getNthNode(index - 1);
+	}
+	else {
+	   location = getNthNode(index);
+	}
+	LNode toBeAdded = new LNode(value);
+	addAfter(location, toBeAdded);
+	size++;
     }
 
+    // also adds before if size == 0
     private void addAfter(LNode location, LNode toBeAdded) {
 	if (size == 0) {
 	    head = toBeAdded;
@@ -50,6 +63,12 @@ public class MyLinkedList {
 	    location.next = toBeAdded;
 	    toBeAdded.prev = location;
 	    tail = location.next;
+	}
+	else if (location.prev == null) { // if location = head (actually adds before not after)
+	    location.prev = toBeAdded;
+	    toBeAdded.next = location;
+	    toBeAdded.prev = null;
+	    head = toBeAdded;
 	}
 	else { // if location is anywhere in the list besides the tail
 	    toBeAdded.prev = location;
@@ -62,13 +81,6 @@ public class MyLinkedList {
 
     public boolean add (int value) {
 	addAfter(tail, new LNode(value));
-	/** else {
-	    LNode current = head;
-	    while (current.next != null) {
-		current = current.next;
-	    }
-	    current.next = new LNode(value);
-	    } **/
 	size++;
 	return true;
     }
@@ -153,6 +165,9 @@ public class MyLinkedList {
     }
 
      public int remove(int index) {
+	 if (index < 0 || index > size) {
+	     throw new IndexOutOfBoundsException();
+	 }
 	 LNode nodeToRemove = getNthNode(index);
 	 int removedVal = get(index);
 	 remove(nodeToRemove);
@@ -169,8 +184,9 @@ public class MyLinkedList {
 	//System.out.println(list1.set(2, 7));
 	// System.out.println("new list " + list1);
 	// System.out.println(list1.getNthNode(1));
-        System.out.println(list1.remove(2));
-	System.out.println(list1);
+        // System.out.println(list1.remove(2));
+        // list1.add(0, 17);
+	// System.out.println(list1);
 	
     }
 }
