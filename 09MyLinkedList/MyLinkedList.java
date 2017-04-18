@@ -37,17 +37,38 @@ public class MyLinkedList {
 	return size;
     }
 
-    public boolean add (int value) {
-	if (head == null) {
-	    head = new LNode(value);
+    public void add (int index, int value) {
+	// idk
+    }
+
+    private void addAfter(LNode location, LNode toBeAdded) {
+	if (size == 0) {
+	    head = toBeAdded;
+	    tail = toBeAdded;
 	}
-	else {
+	else if (location.next == null) { // if location = tail
+	    location.next = toBeAdded;
+	    toBeAdded.prev = location;
+	    tail = location.next;
+	}
+	else { // if location is anywhere in the list besides the tail
+	    toBeAdded.prev = location;
+	    toBeAdded.next = location.next;
+	    location.next.prev = toBeAdded;
+	    location.next = toBeAdded;
+	}
+	size++;
+    }
+
+    public boolean add (int value) {
+	addAfter(tail, new LNode(value));
+	/** else {
 	    LNode current = head;
 	    while (current.next != null) {
 		current = current.next;
 	    }
 	    current.next = new LNode(value);
-	}
+	    } **/
 	size++;
 	return true;
     }
@@ -95,10 +116,12 @@ public class MyLinkedList {
 
     private LNode remove (LNode current) {
 	if (current.prev != null && current.next != null) {
+	    // System.out.println("trololol");
 	    current.prev.next = current.next;
 	    current.next.prev = current.prev;
 	}
 	else if (current.prev == null && current.next == null) {
+	    System.out.println("trololol");
 	    head = null;
 	    tail = null;
 	}
@@ -107,6 +130,7 @@ public class MyLinkedList {
 	    current.next.prev = null;
 	}
 	else { // assuming current.next == null
+	    // System.out.println("trololol");
 	    tail = current.prev;
 	    current.prev.next = null;
 	}
@@ -125,19 +149,15 @@ public class MyLinkedList {
 	    current = current.next;
 	    counter++;
 	}
-	// System.out.println(current.value);
 	return current;
     }
 
-    /** public int remove(int index) {
-	LNode val = get
-        
-	} **/
-
-
-    public void add (int index, int value) {
-	// idk
-    }
+     public int remove(int index) {
+	 LNode nodeToRemove = getNthNode(index);
+	 int removedVal = get(index);
+	 remove(nodeToRemove);
+	 return removedVal;
+	} 
 
     public static void main (String[] args) {
         MyLinkedList list1 = new MyLinkedList();
@@ -148,7 +168,9 @@ public class MyLinkedList {
 	// System.out.println(list1.get(2));
 	//System.out.println(list1.set(2, 7));
 	// System.out.println("new list " + list1);
-        System.out.println(list1.getNthNode(1));
+	// System.out.println(list1.getNthNode(1));
+        System.out.println(list1.remove(2));
+	System.out.println(list1);
 	
     }
 }
