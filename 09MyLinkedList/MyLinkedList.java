@@ -78,7 +78,6 @@ public class MyLinkedList implements Iterable<Integer> {
 	    location.next.prev = toBeAdded;
 	    location.next = toBeAdded;
 	}
-	size++;
     }
 
     public boolean add (int value) {
@@ -183,7 +182,7 @@ public class MyLinkedList implements Iterable<Integer> {
 
     private class MyLinkedListIterator implements Iterator<Integer> {
 	private MyLinkedList linkedList;
-	private LNode current;
+	private LNode current = head;
 
 	public MyLinkedListIterator(MyLinkedList linkedList) {
 	    this.linkedList = linkedList;
@@ -210,11 +209,19 @@ public class MyLinkedList implements Iterable<Integer> {
     }
 
 
-    public static void main (String[] args) {
+    /** public static void main (String[] args) {
         MyLinkedList list1 = new MyLinkedList();
 	list1.add(11);
        	list1.add(541);
 	list1.add(-19);
+	MyLinkedList list2 = new MyLinkedList();
+	for (int i = 0; i < 10; i++) {
+	    Random randgen = new Random();
+	    int rand = randgen.nextInt(11);
+	    list2.add(rand);
+	}
+	System.out.println(list2);
+	// System.out.println(list1.size());
 	// System.out.println(list1);
 	// System.out.println(list1.get(2));
 	//System.out.println(list1.set(2, 7));
@@ -223,8 +230,8 @@ public class MyLinkedList implements Iterable<Integer> {
         // System.out.println(list1.remove(2));
         // list1.add(0, 17);
 	// System.out.println(list1);
-	for (Integer element:list1) {
+	for (Integer element:list2) {
 	    System.out.println(element);
 	}
-    }
+	} **/
 }
