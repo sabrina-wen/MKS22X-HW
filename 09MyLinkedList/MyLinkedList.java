@@ -1,4 +1,6 @@
-public class MyLinkedList {
+import java.util.*;
+
+public class MyLinkedList implements Iterable<Integer> {
     LNode head, tail;
     int size;
 
@@ -172,14 +174,48 @@ public class MyLinkedList {
 	 int removedVal = get(index);
 	 remove(nodeToRemove);
 	 return removedVal;
-	} 
+	}
+
+    // implements iterable method below this one
+    public Iterator<Integer> iterator() {
+	return new MyLinkedListIterator(this);
+    }
+
+    private class MyLinkedListIterator implements Iterator<Integer> {
+	private MyLinkedList linkedList;
+	private LNode current;
+
+	public MyLinkedListIterator(MyLinkedList linkedList) {
+	    this.linkedList = linkedList;
+	}
+	
+	public boolean hasNext() {
+	    return current != null;
+	}
+	
+	public Integer next() {
+	    if (!hasNext()) {
+		throw new NoSuchElementException();
+	    }
+	    else {
+		int value  = current.value;
+		current = current.next;
+		return value;
+	    }
+	}
+	
+	public void remove() {
+	    throw new UnsupportedOperationException();
+	}
+    }
+
 
     public static void main (String[] args) {
         MyLinkedList list1 = new MyLinkedList();
 	list1.add(11);
        	list1.add(541);
 	list1.add(-19);
-	System.out.println(list1);
+	// System.out.println(list1);
 	// System.out.println(list1.get(2));
 	//System.out.println(list1.set(2, 7));
 	// System.out.println("new list " + list1);
@@ -187,6 +223,8 @@ public class MyLinkedList {
         // System.out.println(list1.remove(2));
         // list1.add(0, 17);
 	// System.out.println(list1);
-	
+	for (Integer element:list1) {
+	    System.out.println(element);
+	}
     }
 }
