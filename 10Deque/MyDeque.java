@@ -3,7 +3,7 @@ public class MyDeque {
     private int size, front, back;
 
     public MyDeque() {
-	ary = new String[10];
+	ary = new String[1];
 	size = 0;
 	front = 0;
 	back = 0;
@@ -11,17 +11,19 @@ public class MyDeque {
 
     public void addFirst(String s) {
 	if (size == ary.length) {
-	    resize(ary);
+	    ary = resize(ary);
 	}
 	
-	if (front - 1 < 0) {
-	    front = front - 1 + size;
+	if (front == 0) {
+	    ary[ary.length - 1] = s;
+	    front = ary.length - 1;
 	}
 	else {
-	    front = front - 1;
+	    ary[front - 1] = s;
+	    front--;
 	}
-	ary[front] = s;
 	size++;
+	System.out.println("front: " + front + ", size: " + size + " length of array: " + ary.length);
     }
 
     /**  public void addLast(String s) {
@@ -40,8 +42,8 @@ public class MyDeque {
     } **/
 
     public String[] resize(String[] toResize) {
-	String[] newAry = new String[size * 2];
-	for (int i = 0;i < toResize.length;i++) {
+	String[] newAry = new String[toResize.length * 2];
+	for (int i = 0; i < toResize.length; i++) {
 	    newAry[i] = toResize[i];
 	}
 	return newAry;
@@ -61,6 +63,8 @@ public class MyDeque {
 	one.addFirst("hi");
 	System.out.println(one);
 	one.addFirst("hElLo");
+	System.out.println(one);
+	one.addFirst("HEY");
 	System.out.println(one);
     }
 }
