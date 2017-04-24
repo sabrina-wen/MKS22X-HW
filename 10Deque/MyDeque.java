@@ -11,7 +11,7 @@ public class MyDeque {
 
     public void addFirst(String s) {
 	if (size == ary.length) {
-	    ary = resize(ary);
+	    resize();
 	}
 	
 	if (front == 0) {
@@ -41,12 +41,12 @@ public class MyDeque {
     public String getLast() {
     } **/
 
-    public String[] resize(String[] toResize) {
-	String[] newAry = new String[toResize.length * 2];
-	for (int i = 0; i < toResize.length; i++) {
-	    newAry[i] = toResize[i];
+    public void resize() {
+	String[] newAry = new String[ary.length * 2];
+	for (int i = 0; i < ary.length; i++) {
+	    newAry[i] = ary[i];
 	}
-	return newAry;
+        ary = newAry;
     }
     
     public String toString() {
