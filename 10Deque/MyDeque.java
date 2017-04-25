@@ -12,7 +12,7 @@ public class MyDeque {
     public void addFirst(String s) {
 	if (size == ary.length) {
 	    resize();
-	    System.out.println("lol");
+	    // System.out.println("lol");
 	}
 	if (size == 1) {
 	    back = front;
@@ -27,13 +27,26 @@ public class MyDeque {
 	}
 	ary[front % ary.length] = s;
 	size++;
+	// System.out.println("front: " + front + " back: " + back + ", size: " + size + " length of array: " + ary.length);
+    }
+
+    public void addLast(String s) {
+	if (size == ary.length) {
+	    resize();
+	}
+	if (back == ary.length - 1) {
+	    ary[0] = s;
+	    back = 0;
+	}
+	else {
+	    ary[(back + 1) % ary.length] = s;
+	back++;
+	}
+	size++;
 	System.out.println("front: " + front + " back: " + back + ", size: " + size + " length of array: " + ary.length);
     }
 
-    /**  public void addLast(String s) {
-    }
-
-    public String removeFirst() {
+    /** public String removeFirst() {
     }
 
     public String removeLast() {
@@ -47,8 +60,18 @@ public class MyDeque {
 
     public void resize() {
 	String[] newAry = new String[ary.length * 2];
-	for (int i = 0; i < ary.length; i++) {
-	    newAry[i] = ary[i];
+	if (front == 0 && back == ary.length - 1) {
+	    for (int i = 0; i < ary.length; i++) {
+		newAry[i] = ary[i];	
+	    }
+	}
+	else {
+	    for (int i = front; i < ary.length; i++) {
+		newAry[i + ary.length] = ary[i];
+	    }
+	    for (int i = 0; i < front; i++) {
+		newAry[i] = ary[i];
+	    }
 	}
         ary = newAry;
     }
@@ -69,6 +92,10 @@ public class MyDeque {
 	one.addFirst("hElLo");
 	System.out.println(one);
 	one.addFirst("HEY");
+	System.out.println(one);
+	one.addLast("last!");
+	System.out.println(one);
+	one.addLast(":(");
 	System.out.println(one);
     }
 }
