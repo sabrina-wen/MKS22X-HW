@@ -60,6 +60,7 @@ public class MyDeque {
 
     public void resize() {
 	String[] newAry = new String[ary.length * 2];
+	int counter = 0;
 	if (front == 0 && back == ary.length - 1) {
 	    for (int i = 0; i < ary.length; i++) {
 		newAry[i] = ary[i];	
@@ -71,9 +72,11 @@ public class MyDeque {
 	    }
 	    for (int i = 0; i < front; i++) {
 		newAry[i] = ary[i];
+		counter++;
 	    }
 	}
         ary = newAry;
+        front += counter + 1;
     }
     
     public String toString() {
