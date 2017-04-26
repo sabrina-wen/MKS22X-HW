@@ -14,34 +14,32 @@ public class MyDeque {
 	    resize();
 	    // System.out.println("lol");
 	}
-	if (size == 1) {
+	/** if (size == 1) {
 	    back = front;
+	    } **/
+	if (size != 0) {
+	    if (front == 0) {
+		// ary[ary.length - 1] = s;
+		front = ary.length - 1;
+	    }
+	    else {
+		// ary[front - 1] = s;
+		front = front - 1;
+	    }
 	}
-	if (front == 0) {
-	    // ary[ary.length - 1] = s;
-	    front = ary.length - 1;
-	}
-	else {
-	    // ary[front - 1] = s;
-	    front = front - 1;
-	}
-	ary[front % ary.length] = s;
+	ary[front] = s;
 	size++;
-	// System.out.println("front: " + front + " back: " + back + ", size: " + size + " length of array: " + ary.length);
+	 System.out.println("front: " + front + " back: " + back + ", size: " + size + " length of array: " + ary.length);
     }
 
     public void addLast(String s) {
 	if (size == ary.length) {
 	    resize();
 	}
-	if (back == ary.length - 1) {
-	    ary[0] = s;
-	    back = 0;
+	if (size != 0) {
+	    back %=  ary.length;
 	}
-	else {
-	    ary[(back + 1) % ary.length] = s;
-	back++;
-	}
+        ary[back] = s;
 	size++;
 	System.out.println("front: " + front + " back: " + back + ", size: " + size + " length of array: " + ary.length);
     }
@@ -60,23 +58,12 @@ public class MyDeque {
 
     public void resize() {
 	String[] newAry = new String[ary.length * 2];
-	int counter = 0;
-	if (front == 0 && back == ary.length - 1) {
-	    for (int i = 0; i < ary.length; i++) {
-		newAry[i] = ary[i];	
-	    }
-	}
-	else {
-	    for (int i = front; i < ary.length; i++) {
-		newAry[i + ary.length] = ary[i];
-	    }
-	    for (int i = 0; i < front; i++) {
-		newAry[i] = ary[i];
-		counter++;
-	    }
+	for (int i = 0; i < size; i++) {
+	    newAry[i] = ary[(front + i) % ary.length];
 	}
         ary = newAry;
-        front += counter + 1;
+        front = 0;
+	back = size;
     }
     
     public String toString() {
