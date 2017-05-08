@@ -28,30 +28,45 @@ public class MyHeap {
     }
 
     public void add(String s) {
-        ary[size + 1] = s;
+        if (size == ary.length - 1) {
+	    resize();
+	}
+	int index = size + 1;
+        ary[index] = s;
+	pushUp(index);
 	size++;
     }
 
-    public void pushUp() {
+    private void pushUp(int pos) {
+	while (pos >= 2) {
+	    int parent = pos / 2;
+	    if (ary[parent].compareTo(ary[pos]) > 0) {
+		swap(parent, pos);
+	    }
+	    pos--;
+	}
     }
 
-    public void pushDown() {
+    private void swap(int a, int b) {
+	String temp = ary[a];
+	ary[a] = ary[b];
+	ary[b] = temp;
     }
 
-    public int setPos(String s) {
-	int pos = -1;
-	int compVal;
-	for (String str:ary) {
-	    int val = s.compareTo(ary[i]);
-	    if (val < compVal)
+    /** public String remove(String s) {
     }
+
+    private void pushDown() {
+    } **/
 
     public static void main (String[] args) {
 	MyHeap one = new MyHeap();
-	one.add("a");
-	one.add("b");
+	one.add("e");
+        one.add("b");
 	one.add("d");
+	one.add("a");
 	System.out.println(one);
+	// System.out.println("b".compareTo("c"));
 	// System.out.println(one.size);
     }
 }
