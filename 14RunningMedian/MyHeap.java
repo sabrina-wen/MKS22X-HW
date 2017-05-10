@@ -90,6 +90,10 @@ public class MyHeap {
 	return ary[1];
     }
 
+    public int size() {
+	return size;
+    }
+
     /** public static void main (String[] args) {
 	MyHeap one = new MyHeap(false);
 	one.add(11);
