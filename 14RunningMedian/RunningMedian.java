@@ -1,7 +1,7 @@
 public class RunningMedian {
     
-    public MyHeap left;
-    public MyHeap right;
+    public MyHeap left; // #s <= median, max
+    public MyHeap right; // #s >= median, min heap
 
     public RunningMedian() {
 	left = new MyHeap(true);
@@ -19,12 +19,15 @@ public class RunningMedian {
 	    right.add(num);
 	}
 
-	if (left.size() - right.size() >= 2) {
+	if (left.size() > right.size() + 1) {
 	    right.add(left.remove());
 	}
-	if (right.size() - left.size() >= 2) {
-	    left.add(right.remove());
-	}
+        if (right.size() > left.size() + 1) {
+	    right.remove();
+	    // left.add(right.pe);
+	    // right.remove();
+	    //System.out.println("HEY");
+	} 
     }
 
     public double getMedian() {
@@ -46,11 +49,12 @@ public class RunningMedian {
     public static void main (String[] args) {
 	RunningMedian med = new RunningMedian();
 	med.add(1);
-	// System.out.println(med);
+	//System.out.println(med);
 	med.add(2);
-	// System.out.println(med);
+	//System.out.println(med);
         med.add(3);
 	System.out.println(med);
+	//System.out.println(med.getMedian());
         med.add(4);
         System.out.println(med);
 	System.out.println(med.getMedian());
