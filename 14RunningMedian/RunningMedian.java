@@ -1,3 +1,4 @@
+
 public class RunningMedian {
     
     public MyHeap left; // #s <= median, max
@@ -23,10 +24,11 @@ public class RunningMedian {
 	    right.add(left.remove());
 	}
         if (right.size() > left.size() + 1) {
-	    right.remove();
+	    left.add(right.remove());
+	    // System.out.println("Removed val: " + right.remove());
 	    // left.add(right.pe);
 	    // right.remove();
-	    //System.out.println("HEY");
+	    // System.out.println("HEY");
 	} 
     }
 
@@ -48,15 +50,23 @@ public class RunningMedian {
 
     public static void main (String[] args) {
 	RunningMedian med = new RunningMedian();
+	RunningMedian angery = new RunningMedian();
+	for (int i = 0; i < 5; i++) {
+	    angery.add(i);
+	}
 	med.add(1);
-	//System.out.println(med);
+	System.out.println(med);
 	med.add(2);
-	//System.out.println(med);
+	System.out.println(med);
         med.add(3);
 	System.out.println(med);
-	//System.out.println(med.getMedian());
         med.add(4);
-        System.out.println(med);
+	med.add(5);
+	med.add(6);
+	med.add(7);
+	System.out.println(med);
+	med.add(8);
+        //System.out.println(med);
 	System.out.println(med.getMedian());
     }
 }
