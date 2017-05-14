@@ -51,7 +51,7 @@ public class RunningMedian {
     public static void main (String[] args) {
 	RunningMedian med = new RunningMedian();
 	RunningMedian angery = new RunningMedian();
-	for (int i = 0; i < 5; i++) {
+	for (int i = 1; i < 5001; i++) {
 	    angery.add(i);
 	}
 	med.add(1);
@@ -66,7 +66,7 @@ public class RunningMedian {
 	med.add(7);
 	System.out.println(med);
 	med.add(8);
-        //System.out.println(med);
-	System.out.println(med.getMedian());
+        System.out.println(med);
+	System.out.println(angery.getMedian());
     }
 }
