@@ -92,7 +92,7 @@ public class Quick {
 	data[numTwo] = holder;
     }
     
-    public static int[] quickSort(int[] a) {
+    public static int[] quicksort(int[] a) {
         
         quickSortH(a, 0, a.length - 1);
 	return a;
