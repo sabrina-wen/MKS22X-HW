@@ -20,6 +20,7 @@ public class Location implements Comparable<Location> {
 	this.previous = previous;
 	this.distToStart = distToStart;
 	this.distToGoal = distToGoal;
+	aStar = false;
     }
 
     public int getDistToGoal() {
@@ -32,7 +33,7 @@ public class Location implements Comparable<Location> {
 
     public int compareTo (Location other) {
 	if (aStar) {
-	    return (this.previous.getDistToGoal() + this.getDistToGoal()) - (other.previous.getDistToGoal() + other.getDistToGoal());
+	    return (this.getDistToStart() + this.getDistToGoal()) - (other.getDistToStart() + other.getDistToGoal());
 	}
 	else {
 	    return this.getDistToGoal() - other.getDistToGoal();
