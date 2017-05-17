@@ -90,7 +90,7 @@ public class FrontierPriorityQueue {
 	return ary[1];
     }
 
-    public static void main (String[] args) {
+    /** public static void main (String[] args) {
 	// System.out.println("z".compareTo("a"));
 	FrontierPriorityQueue one = new FrontierPriorityQueue(false);
 	one.add(new Location(2, 3, null, 0, 0, false));
@@ -99,5 +99,5 @@ public class FrontierPriorityQueue {
 	System.out.println(one);
 	// System.out.println("b".compareTo("c"));
 	// System.out.println(one.size);
-    } 
+	} **/
 }
