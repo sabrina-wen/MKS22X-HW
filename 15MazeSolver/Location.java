@@ -13,16 +13,6 @@ public class Location implements Comparable<Location> {
 	this.aStar = aStar;
     }
 
-    // if not using astar: 
-    public Location (int r, int c, Location previous, int distToStart, int distToGoal) {
-	row = r;
-	col = c;
-	this.previous = previous;
-	this.distToStart = distToStart;
-	this.distToGoal = distToGoal;
-	aStar = false;
-    }
-
     public int getDistToGoal() {
 	return distToGoal;
     }
