@@ -1,5 +1,5 @@
 import java.util.*;
 
-public class StackFrontier {
-    private Stack<Location> stackLoc = new Stack<Location>;
+public class StackFrontier implements Frontier { // have not yet written frontier lol
+    private Stack<Location> stackLoc;
 }
