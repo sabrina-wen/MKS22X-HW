@@ -1,4 +1,4 @@
-public class FrontierPriorityQueue {
+public class FrontierPriorityQueue implements Frontier{
     private Location[] ary;
     private int size;
     private int changer;
@@ -88,6 +88,10 @@ public class FrontierPriorityQueue {
 
     public Location peek() {
 	return ary[1];
+    }
+
+    public int size() {
+	return size;
     }
 
     /** public static void main (String[] args) {
