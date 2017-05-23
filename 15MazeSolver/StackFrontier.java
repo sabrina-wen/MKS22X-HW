@@ -22,10 +22,10 @@ public class StackFrontier implements Frontier {
 	return stackLoc.size();
     }
 
-    public static void main (String[] args) {
+    /** public static void main (String[] args) {
 	StackFrontier s = new StackFrontier();
 	s.add(new Location(2, 3, null, 0, 0, false));
 	s.next();
-    }
+	} **/
 
 }
