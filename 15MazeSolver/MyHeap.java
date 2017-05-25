@@ -1,18 +1,16 @@
-
-
-public class FrontierPriorityQueue implements Frontier{
-    public Location[] ary;
+public class MyHeap {
+    private Location[] ary;
     private int size;
     private int changer;
 
-    public FrontierPriorityQueue() {
-	ary = new Location[10];
+    public MyHeap() {
+	ary = new String[10];
 	size = 0;
 	changer = -1;
     }
 
-    public FrontierPriorityQueue(boolean isMax) {
-	ary = new Location[10];
+    public MyHeap(boolean isMax) {
+	ary = new String[10];
 	size = 0;
 	if (isMax) {
 	    changer = -1;
@@ -23,7 +21,7 @@ public class FrontierPriorityQueue implements Frontier{
     } 
 
     public void resize() {
-        Location[] newAry = new Location[size * 2];
+        String[] newAry = new String[size * 2];
 	for (int i = 0; i < ary.length; i++) {
 	    newAry[i] = ary[i];
 	}
@@ -40,7 +38,7 @@ public class FrontierPriorityQueue implements Frontier{
     }
 
     // this is for a min heap
-    public void add(Location s) {
+    public void add(String s) {
         if (size == ary.length - 1) {
 	    resize();
 	}
@@ -61,13 +59,13 @@ public class FrontierPriorityQueue implements Frontier{
     }
 
     private void swap(int a, int b) {
-	Location temp = ary[a];
+	String temp = ary[a];
 	ary[a] = ary[b];
 	ary[b] = temp;
     }
 
-    public Location remove() { // always removes top node
-	Location retVal = ary[1];
+    public String remove() { // always removes top node
+	String retVal = ary[1];
 	ary[1] = ary[size];
 	ary[size] = null;
 	size--;
@@ -88,22 +86,25 @@ public class FrontierPriorityQueue implements Frontier{
 	}
     }
 
-    public Location next() {
-	remove();
+    public String peek() {
 	return ary[1];
     }
 
-    public int size() {
-	return size;
-    }
-
     /** public static void main (String[] args) {
-	// System.out.println("z".compareTo("a"));
-	FrontierPriorityQueue one = new FrontierPriorityQueue(false);
-	one.add(new Location(2, 3, null, 0, 0, false));
-	one.add(new Location(2, 3, null, 5, 8, false));
-	one.add(new Location(2, 3, null, 6, 7, false));
+	System.out.println("z".compareTo("a"));
+	MyHeap one = new MyHeap(false);
+	one.add("e");
+        one.add("a");
+	one.add("g");
+	one.add("z");
+	one.add("cy");
+	one.add("r");
+	one.add("c");
+	one.add("b");
 	System.out.println(one);
+	one.remove();
+	System.out.println(one);
+	one.peek();
 	// System.out.println("b".compareTo("c"));
 	// System.out.println(one.size);
 	} **/

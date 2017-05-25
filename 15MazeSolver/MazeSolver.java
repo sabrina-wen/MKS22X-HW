@@ -1,6 +1,9 @@
+import java.util.*;
+
 public class MazeSolver {
     private Maze board;
     private boolean animate;
+    private boolean aStar;
 
     public MazeSolver(String filename) {
 	this(filename, false);
@@ -12,21 +15,91 @@ public class MazeSolver {
     }
 
     public String toString() {
-	// etc
+        if (animate) {
+	    return board.toString(2);
+	}
+	else {
+	    return board.toString();
+	}
     }
-	
+
+    public void solve() {
+	solve(1);
+    }
 
     public void solve(int style) {
+	Frontier front = null;
 	if (style == 0) { // DFS
-	    Frontier front = new FrontierStack();
+	    front = new StackFrontier();
 	}
 	else if (style == 1) { //  BFS
-	    Fronter front = new FrontierQueue();
+	    front = new QueueFrontier();
 	}
-	else if (style == 2 || style == ) { // BestFirst or A*
-	    Frontier front = new FrontierPriorityQueue();
+	else if (style == 2 || style == 3) { // BestFirst
+	    front = new FrontierPriorityQueue();
+	}
+	else if (style == 3) { // A*
+	    aStar = true;
+	    front = new FrontierPriorityQueue();
 	}
 	// throw exception if style >= 4??
-	front.add(maze.getStart());
+	front.add(board.getStart());
+	while (front.size() > 0) {
+	    Location current = front.next();
+	    // if you are at end location you're done
+	    System.out.println(current.getRow());
+	    if (distToGoal(current.getRow(), current.getCol()) == 0) {
+		board.set(current.getRow(), current.getCol(), 'E');
+		current = current.previous;
+		while (current.previous != null) {
+		    board.set(current.getRow(), current.getCol(), '.');
+		}
+		if (distToStart(current.getRow(), current.getCol()) == 0) {
+		    board.set(current.getRow(), current.getCol(), 'S');
+		}
+		break; // exit bc done
+	    }
+	    // if not done, set the spots u searched to a .
+	    board.set(current.getRow(), current.getCol(), '.');
+	    for (Location neighbor:getValidNeighbors(current, style == 3)) {
+		front.add(neighbor);
+		board.set(neighbor.getRow(), neighbor.getCol(), '?'); // ? = frontier
+	    }
+		
+	}
+
+    }
+
+    private int distToStart(int r, int c) {
+	Location start = board.getStart();
+	return Math.abs(start.getRow() - r) + Math.abs(start.getCol() - c);
+    }
+
+    private int distToGoal(int r, int c) {
+	Location end = board.getEnd();
+	return Math.abs(end.getRow() - r) + Math.abs(end.getCol() - c);
+    }
+    
+    private ArrayList<Location> getValidNeighbors(Location l, boolean aStar) {
+	ArrayList<Location> neighbors = new ArrayList<Location>();
+	if (board.get(l.getRow() + 1, l.getCol()) == ' ') {
+	    neighbors.add(new Location(l.getRow() + 1, l.getCol(), l, distToStart(l.getRow() + 1, l.getCol()), distToGoal(l.getRow() + 1, l.getCol()), aStar));
+	}
+	if (board.get(l.getRow(), l.getCol() + 1) == ' ') {
+	    neighbors.add(new Location(l.getRow(), l.getCol() + 1, l, distToStart(l.getRow(), l.getCol() + 1), distToGoal(l.getRow(), l.getCol() + 1), aStar));
+	}
+	if (board.get(l.getRow() - 1, l.getCol()) == ' ') {
+	    neighbors.add(new Location(l.getRow() - 1, l.getCol(), l, distToStart(l.getRow() - 1, l.getCol()), distToGoal(l.getRow() - 1, l.getCol()), aStar));
+	}
+	if (board.get(l.getRow(), l.getCol() - 1) == ' ') {
+	    neighbors.add(new Location(l.getRow(), l.getCol() - 1, l, distToStart(l.getRow(), l.getCol() - 1), distToGoal(l.getRow(), l.getCol() - 1), aStar));
+	}
+	return neighbors;
+    }
+
+    public static void main (String[] args) {
+	MazeSolver m = new MazeSolver(args[0]);
+	m.solve(Integer.parseInt(args[1]));
+	System.out.println(m);
     }
 }

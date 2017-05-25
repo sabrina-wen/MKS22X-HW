@@ -1,11 +1,11 @@
-import java.util.*;
+import java.util.Queue;
 
-public class QueueFrontier implements Frontier {
-    private ArrayDeque<Location> q;
+public class StackFrontier implements Frontier {
+    private Queue<Location> q;
     private int size;
 
-    public QueueFrontier() {
-	q = new ArrayDeque<Location>();
+    public StackFrontier() {
+	q = new Queue<Location>;
     }
 
     public void add(Location loc) {
@@ -14,8 +14,8 @@ public class QueueFrontier implements Frontier {
     }
 
     public Location next() {
+	q.poll();
 	size--;
-	return q.poll();
     }
 
     public int size() {
