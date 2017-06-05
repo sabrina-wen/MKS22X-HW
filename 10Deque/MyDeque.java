@@ -54,8 +54,15 @@ public class MyDeque {
 	    throw new NoSuchElementException();
 	}
 	String firstVal = getFirst();
-	ary[front] = null;
-	front = (front + 1) % ary.length;
+	if (front != ary.length - 1) {
+	    ary[front] = null;
+	    front++;
+	}
+	else {
+	    ary[front] = null;
+	    front = 0;
+	}
+	// ary[front] = ary[(front + 1) * ary.length
 	size--;
 	return firstVal;
     }
