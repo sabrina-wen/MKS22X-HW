@@ -31,6 +31,7 @@ public class MazeSolver {
 	Frontier front = null;
 	if (style == 0) { // DFS
 	    front = new StackFrontier();
+	    // System.out.println("0");
 	}
 	else if (style == 1) { //  BFS
 	    front = new QueueFrontier();
@@ -45,15 +46,23 @@ public class MazeSolver {
 	// throw exception if style >= 4??
 	front.add(board.getStart());
 	while (front.size() > 0) {
+	    // System.out.println("hi");
 	    Location current = front.next();
+	    // System.out.println("xcor: " + current.getRow() + " ycor: " + current.getCol());
+	    // System.out.println(front.toString());
+	
 	    // if you are at end location you're done
-	    System.out.println(current.getRow());
+	    // System.out.println(current.getRow());
+	    System.out.println(distToGoal(current.getRow(), current.getCol()));
 	    if (distToGoal(current.getRow(), current.getCol()) == 0) {
 		board.set(current.getRow(), current.getCol(), 'E');
 		current = current.previous;
+		// go backwards to trace path
 		while (current.previous != null) {
-		    board.set(current.getRow(), current.getCol(), '.');
+		    board.set(current.getRow(), current.getCol(), '@');
+		    current = current.previous;
 		}
+		// if no prev = @ start pos
 		if (distToStart(current.getRow(), current.getCol()) == 0) {
 		    board.set(current.getRow(), current.getCol(), 'S');
 		}
@@ -61,13 +70,16 @@ public class MazeSolver {
 	    }
 	    // if not done, set the spots u searched to a .
 	    board.set(current.getRow(), current.getCol(), '.');
-	    for (Location neighbor:getValidNeighbors(current, style == 3)) {
-		front.add(neighbor);
-		board.set(neighbor.getRow(), neighbor.getCol(), '?'); // ? = frontier
-	    }
-		
-	}
+	    // adding frontiers
+		for (Location neighbor:getValidNeighbors(current, style == 3)) {
+		    front.add(neighbor);
+		    System.out.println("front added");
+		    board.set(neighbor.getRow(), neighbor.getCol(), '?'); // ? = frontier
+		}
 
+		System.out.println("xcor: " + current.getRow() + " ycor: " + current.getCol());
+		System.out.println(front.toString());
+	}
     }
 
     private int distToStart(int r, int c) {
@@ -99,7 +111,8 @@ public class MazeSolver {
 
     public static void main (String[] args) {
 	MazeSolver m = new MazeSolver(args[0]);
-	m.solve(Integer.parseInt(args[1]));
+        m.solve(Integer.parseInt(args[1]));
+	// System.out.println(board.getStart().compareTo(board.getEnd()));
 	System.out.println(m);
     }
 }
