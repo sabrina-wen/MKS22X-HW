@@ -19,16 +19,16 @@ public class MyDeque {
 	    resize();
 	    // System.out.println("lol");
 	}
-	if (size != 0) {
-	    if (front == 0) {
-		// ary[ary.length - 1] = s;
-		front = ary.length - 1;
-	    }
-	    else {
-		// ary[front - 1] = s;
-		front = front - 1;
-	    }
+	if (front == 0 && size == 0) {
+	    front = 0;
 	}
+	else if (front == 0 ) {
+	    front = ary.length - 1;
+	}
+	else {
+	    front--;
+	}
+	
 	ary[front] = s;
 	size++;
 	// System.out.println("front: " + front + " back: " + back + ", size: " + size + " length of array: " + ary.length);
@@ -41,8 +41,13 @@ public class MyDeque {
 	if (size == ary.length) {
 	    resize();
 	}
-	if (size != 0) {
-	    back %=  ary.length;
+	if (back != ary.length - 1) {
+	    back++;
+	    //System.out.println("HEY");
+	}
+	else if (back == ary.length - 1) {
+	    back = 0;
+	    //System.out.println("HI");
 	}
         ary[back] = s;
 	size++;
@@ -54,15 +59,13 @@ public class MyDeque {
 	    throw new NoSuchElementException();
 	}
 	String firstVal = getFirst();
-	if (front != ary.length - 1) {
-	    ary[front] = null;
-	    front++;
-	}
-	else {
-	    ary[front] = null;
+	ary[front] = null;
+	if (front == ary.length - 1) {
 	    front = 0;
 	}
-	// ary[front] = ary[(front + 1) * ary.length
+	else if (front != ary.length - 1) {
+	    front++;
+	}
 	size--;
 	return firstVal;
     }
@@ -72,8 +75,13 @@ public class MyDeque {
 	    throw new NoSuchElementException();
 	}
 	String lastVal = getLast();
-	ary[back] = null;
-	back = (back - 1) % ary.length;
+        ary[back] = null;
+	if (back == 0) {
+	    back = ary.length - 1;
+	}
+	else {
+	    back--;
+	}
 	size--;
 	return lastVal;
     }
@@ -94,12 +102,15 @@ public class MyDeque {
 
     public void resize() {
 	String[] newAry = new String[ary.length * 2];
-	for (int i = 0; i < size; i++) {
-	    newAry[i] = ary[(front + i) % ary.length];
+	int i = 0;
+	for (int j = front; j < size + front; j++) {
+	    // newAry[i] = ary[(front + i) % ary.length];
+	    newAry[i] = ary[j % ary.length];
+	    i++;
 	}
         ary = newAry;
         front = 0;
-	back = size;
+	back = size - 1;
     }
     
     public String toString() {
@@ -112,21 +123,45 @@ public class MyDeque {
 	return retVal;
     }
 
-    /** public static void main(String[] args) {
+    /**public static void main(String[] args) {
 	MyDeque one = new MyDeque();
-	one.addFirst("hi");
+	one.addFirst("2");
+        System.out.println(one);
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+        one.addLast("3");
+        System.out.println(one);
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+        one.addFirst("1");
 	System.out.println(one);
-	one.addFirst("hElLo");
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+	one.addLast("4");
 	System.out.println(one);
-	one.addFirst("HEY");
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+	one.addFirst("11");
 	System.out.println(one);
-	one.addLast("last!");
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+        one.addLast("-2");
 	System.out.println(one);
-	one.addLast(":(");
-	System.out.println(one);
+	System.out.println("front val: " + one.front + " back val: " + one.back);
 	one.removeFirst();
-	System.out.println(one);
+        System.out.println("Removed first val: " + one);
+	System.out.println("front val: " + one.front + " back val: " + one.back);
 	one.removeFirst();
+        System.out.println("Removed first val: " + one);
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+	one.removeFirst();
+        System.out.println("Removed first val: " + one);
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+	one.removeFirst();
+        System.out.println("Removed first val: " + one);
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+	one.removeFirst();
+        System.out.println("Removed first val: " + one);
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+	one.removeFirst();
+        System.out.println("Removed first val: " + one);
+	System.out.println("front val: " + one.front + " back val: " + one.back);
+	/** one.removeFirst();
  	System.out.println(one);
 	one.removeLast();
  	System.out.println(one);
@@ -135,7 +170,7 @@ public class MyDeque {
 	one.addFirst("kool-ala");
 	System.out.println(one);
 	one.addFirst("kamel");
-	System.out.println(one);
+	System.out.println(one); **/
     
-	} **/
+    //} 
 }
