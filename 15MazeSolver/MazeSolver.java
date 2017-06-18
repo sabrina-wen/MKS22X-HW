@@ -45,15 +45,16 @@ public class MazeSolver {
 	}
 	// throw exception if style >= 4??
 	front.add(board.getStart());
+	Location current = null;
 	while (front.size() > 0) {
 	    // System.out.println("hi");
-	    Location current = front.next();
+	    current = front.next();
 	    // System.out.println("xcor: " + current.getRow() + " ycor: " + current.getCol());
 	    // System.out.println(front.toString());
 	
 	    // if you are at end location you're done
-	    // System.out.println(current.getRow());
-	    System.out.println(distToGoal(current.getRow(), current.getCol()));
+
+
 	    if (distToGoal(current.getRow(), current.getCol()) == 0) {
 		board.set(current.getRow(), current.getCol(), 'E');
 		current = current.previous;
@@ -73,12 +74,12 @@ public class MazeSolver {
 	    // adding frontiers
 		for (Location neighbor:getValidNeighbors(current, style == 3)) {
 		    front.add(neighbor);
-		    System.out.println("front added");
+		    //System.out.println("front added");
 		    board.set(neighbor.getRow(), neighbor.getCol(), '?'); // ? = frontier
 		}
 
-		System.out.println("xcor: " + current.getRow() + " ycor: " + current.getCol());
-		System.out.println(front.toString());
+		//System.out.println("xcor: " + current.getRow() + " ycor: " + current.getCol());
+		//System.out.println(front.toString());
 	}
     }
 
@@ -109,10 +110,10 @@ public class MazeSolver {
 	return neighbors;
     }
 
-    public static void main (String[] args) {
+    /** public static void main (String[] args) {
 	MazeSolver m = new MazeSolver(args[0]);
         m.solve(Integer.parseInt(args[1]));
 	// System.out.println(board.getStart().compareTo(board.getEnd()));
 	System.out.println(m);
-    }
+	} **/
 }
