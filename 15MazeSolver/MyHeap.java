@@ -4,13 +4,13 @@ public class MyHeap {
     private int changer;
 
     public MyHeap() {
-	ary = new String[10];
+	ary = new Location[10];
 	size = 0;
 	changer = -1;
     }
 
     public MyHeap(boolean isMax) {
-	ary = new String[10];
+	ary = new Location[10];
 	size = 0;
 	if (isMax) {
 	    changer = -1;
@@ -21,7 +21,7 @@ public class MyHeap {
     } 
 
     public void resize() {
-        String[] newAry = new String[size * 2];
+        Location[] newAry = new Location[size * 2];
 	for (int i = 0; i < ary.length; i++) {
 	    newAry[i] = ary[i];
 	}
@@ -38,7 +38,7 @@ public class MyHeap {
     }
 
     // this is for a min heap
-    public void add(String s) {
+    public void add(Location s) {
         if (size == ary.length - 1) {
 	    resize();
 	}
@@ -59,13 +59,13 @@ public class MyHeap {
     }
 
     private void swap(int a, int b) {
-	String temp = ary[a];
+	Location temp = ary[a];
 	ary[a] = ary[b];
 	ary[b] = temp;
     }
 
-    public String remove() { // always removes top node
-	String retVal = ary[1];
+    public Location remove() { // always removes top node
+	Location retVal = ary[1];
 	ary[1] = ary[size];
 	ary[size] = null;
 	size--;
@@ -86,11 +86,15 @@ public class MyHeap {
 	}
     }
 
-    public String peek() {
+    public Location peek() {
 	return ary[1];
     }
 
-    /** public static void main (String[] args) {
+    public int size() {
+	return size;
+    }
+
+    /**  public static void main (String[] args) {
 	System.out.println("z".compareTo("a"));
 	MyHeap one = new MyHeap(false);
 	one.add("e");
